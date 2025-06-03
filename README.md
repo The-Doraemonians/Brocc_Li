@@ -1,2 +1,2 @@
 # Brocc_Li
-Project Bruce_Lee, Diet Planner
+Project Brocc_Li, Diet Planner
