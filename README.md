@@ -1,2 +1,3 @@
-# Brocc_Li
-Project Brocc_Li, Diet Planner
+# Brocc Li
+
+Your Personalized Diet Management Companion.
