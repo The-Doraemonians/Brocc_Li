@@ -1,3 +1,40 @@
 # Brocc Li
 
+## Overview
+
 Your Personalized Diet Management Companion.
+
+## Setup
+
+### Prerequisites
+
+- Python 3.11
+- [uv](https://github.com/astral-sh/uv) package manager
+
+### Installation
+
+1.  Clone the repository:
+
+    ```bash
+    git clone https://github.com/The-Doraemonians/Brocc_Li.git
+    cd Brocc_Li
+    ```
+
+2.  Create a virtual environment (recommended):
+
+    ```bash
+    uv venv
+    ```
+
+3.  Install the required packages using `uv`:
+
+    ```bash
+    uv sync
+    ```
+
+## Running the Application
+
+To start the Brocc Li application, run the following command:
+
+```bash
+streamlit run main.py

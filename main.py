@@ -1,6 +1,4 @@
-def main():
-    print("Hello from brocc-li!")
-
+import src.app as app
 
 if __name__ == "__main__":
-    main()
+    app.run()
