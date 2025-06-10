@@ -150,7 +150,7 @@ def run(icon_path: str | Path) -> None:
     """Main function to run the Streamlit app."""
     initialize_session_state()
 
-    icon = Image.open("assets/images/logo.png")
+    icon = Image.open(icon_path)
 
     st.set_page_config(
         page_title="Brocc Li - Personalized Diet Management Companion",
