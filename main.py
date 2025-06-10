@@ -1,6 +1,6 @@
-def main():
-    print("Hello from brocc-li!")
+import brocc_li.app as app
 
+ICON_PATH = "./assets/images/logo.png"
 
 if __name__ == "__main__":
-    main()
+    app.run(ICON_PATH)
