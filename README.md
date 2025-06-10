@@ -38,3 +38,4 @@ To start the Brocc Li application, run the following command:
 
 ```bash
 streamlit run main.py
+```

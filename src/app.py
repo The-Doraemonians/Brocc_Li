@@ -11,11 +11,11 @@ USER_INSTRUCTIONS_MARKDOWN: str = """
 ### Planning Your Diet
 Provide the following inputs to personalize your diet plan:
 
-    1. Basic Profile Information: age, gender, height, weight, personal goal  
-    2. Location: country, city, distance limit  
-    3. Dietary Preferences & Restrictions: dietary style, cuisine, allergies  
-    4. Time & Cooking Preferences: cooking skill level, time per meal  
-    5. Budget Preferences: daily food budget, prioritize deals  
+    1. Basic Profile Information: age, gender, height, weight, personal goal
+    2. Location: country, city, distance limit
+    3. Dietary Preferences & Restrictions: dietary style, cuisine, allergies
+    4. Time & Cooking Preferences: cooking skill level, time per meal
+    5. Budget Preferences: daily food budget, prioritize deals
 """
 
 
