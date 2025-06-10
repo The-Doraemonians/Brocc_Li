@@ -146,9 +146,11 @@ def render_sidebar() -> None:
     )
 
 
-def run() -> None:
+def run(icon_path: str | Path) -> None:
     """Main function to run the Streamlit app."""
     initialize_session_state()
+
+    icon = Image.open("assets/images/logo.png")
 
     st.set_page_config(
         page_title="Brocc Li - Personalized Diet Management Companion",
