@@ -1,11 +1,10 @@
+from pathlib import Path
+from typing import List, Literal, TypedDict
+
 import streamlit as st
 from PIL import Image
 from streamlit_chat import message
 from streamlit_extras.bottom_container import bottom
-from typing import List, TypedDict, Literal
-
-
-icon: Image.Image = Image.open("assets/images/logo.png")
 
 USER_INSTRUCTIONS_MARKDOWN: str = """
 ### Planning Your Diet
