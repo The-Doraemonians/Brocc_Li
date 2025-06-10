@@ -51,14 +51,14 @@ def login() -> None:
     """Handle the login button click."""
     if st.button("Log in"):
         st.session_state["logged_in"] = True
-        st.experimental_rerun()
+        st.rerun()
 
 
 def logout() -> None:
     """Handle the logout button click."""
     if st.button("Log out"):
         st.session_state["logged_in"] = False
-        st.experimental_rerun()
+        st.rerun()
 
 
 def submit_user_input(user_input) -> None:
