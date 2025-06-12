@@ -1,5 +1,6 @@
 import google.generativeai as genai
 import os
+from dotenv import load_dotenv
 import base64
 import json
 from langchain_core.messages import HumanMessage, AnyMessage, SystemMessage
@@ -9,9 +10,8 @@ from langgraph.graph.message import add_messages
 from langgraph.graph import START, StateGraph
 from langgraph.prebuilt import ToolNode, tools_condition
 
-
-os.environ["GOOGLE_API_KEY"] = "AIzaSyAs7nWidxQCiNBWKKAMblLZe1ZvilTg61Y"
-genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+load_dotenv()
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0.1)
 
