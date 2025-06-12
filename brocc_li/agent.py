@@ -1,19 +1,23 @@
-import google.generativeai as genai
-import os
-from dotenv import load_dotenv
-import base64
 import json
-from langchain_core.messages import HumanMessage, AnyMessage, SystemMessage
+from typing import Annotated, TypedDict
+
+import google.generativeai as genai
+from langchain_core.messages import AnyMessage, HumanMessage, SystemMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
-from typing import TypedDict, Annotated, Optional
-from langgraph.graph.message import add_messages
 from langgraph.graph import START, StateGraph
+from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
 
-load_dotenv()
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+from brocc_li.utils import get_config
+
+cfg = get_config()
+
+GOOGLE_API_KEY = cfg["GOOGLE_API_KEY"]
+
+genai.configure(api_key=GOOGLE_API_KEY)
 
 llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0.1)
+
 
 class AgentState(TypedDict):
     # input_file: Optional[str]  # Contains file path, type (PNG)
@@ -22,11 +26,13 @@ class AgentState(TypedDict):
     # bmi: Optional[float]
     # diet_plan: Optional[str]
 
+
 def bmi_calculator(weight: float, height: float) -> float:
     """Calculate BMI from weight and height."""
     if height <= 0 or weight <= 0:
         raise ValueError("Height and weight must be greater than zero.")
-    return weight / (height ** 2)
+    return weight / (height**2)
+
 
 def extract_preferences(user_input: str) -> dict:
     """Extract preferences from user input."""
@@ -62,6 +68,7 @@ def extract_preferences(user_input: str) -> dict:
         print("Raw content:", repr(content))
         return {}
 
+
 def plan_diet(preferences: dict) -> str:
     """Plan a diet based on user preferences."""
     prompt = f"""Create a diet plan based on these preferences: {preferences}. 
@@ -69,11 +76,12 @@ def plan_diet(preferences: dict) -> str:
     response = llm.invoke(prompt)
     return response.content
 
+
 tools = [
     bmi_calculator,
     # extract_text,
     extract_preferences,
-    plan_diet
+    plan_diet,
 ]
 llm_with_tools = llm.bind_tools(tools)
 
@@ -84,7 +92,8 @@ llm_with_tools = llm.bind_tools(tools)
 #     preferences: Optional[dict]
 #     bmi: Optional[float]
 #     diet_plan: Optional[str]
-    
+
+
 def assistant(state: AgentState):
     # System message
     textual_description_of_tool = """
@@ -116,9 +125,12 @@ def assistant(state: AgentState):
             A string containing a diet plan that includes meals, snacks, and drinks.
     """
     # image = state["input_file"]
-    sys_msg = SystemMessage(content=f"You are an helpful agent that can analyse diet for user and run some computatio without provided tools :\n{textual_description_of_tool}")
+    sys_msg = SystemMessage(
+        content=f"You are an helpful agent that can analyse diet for user and run some computatio without provided tools :\n{textual_description_of_tool}"
+    )
 
     return {"messages": [llm_with_tools.invoke([sys_msg] + state["messages"])]}
+
 
 builder = StateGraph(AgentState)
 
@@ -139,7 +151,9 @@ react_graph = builder.compile()
 
 messages = []
 
-print("🤖 I am your personal diet agent. You can ask me anything about diet or type 'quit/exit' to turn off.")
+print(
+    "🤖 I am your personal diet agent. You can ask me anything about diet or type 'quit/exit' to turn off."
+)
 while True:
     user_input = input("👨 You: ")
     if user_input.lower().strip() in ["exit", "quit"]:
@@ -150,10 +164,7 @@ while True:
     # Run the agent with the full history
     result = react_graph.invoke({"messages": messages, "input_file": None})
     print("🤖 Agent:")
-    for m in result['messages']:
+    for m in result["messages"]:
         m.pretty_print()
     # Optionally, add the latest assistant message to history for context
-    messages.append(result['messages'][-1])
-
-
-
+    messages.append(result["messages"][-1])
