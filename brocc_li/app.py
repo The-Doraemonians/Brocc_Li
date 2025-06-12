@@ -60,7 +60,7 @@ def logout() -> None:
         st.rerun()
 
 
-def submit_user_input(user_input) -> None:
+def submit_user_input(user_input: str) -> None:
     """Handle submission in the user input text area."""
     st.session_state["chat"].append(
         {
