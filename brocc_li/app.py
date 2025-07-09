@@ -7,7 +7,6 @@ from PIL import Image
 from streamlit_chat import message
 from streamlit_extras.bottom_container import bottom
 
-import google.generativeai as genai
 from langchain_core.messages import AnyMessage, HumanMessage, SystemMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.graph import START, StateGraph
@@ -59,8 +58,7 @@ def initialize_agent():
     
     GOOGLE_API_KEY = cfg["GOOGLE_API_KEY"]
     
-    genai.configure(api_key=GOOGLE_API_KEY)
-    llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0.1, api_key=GOOGLE_API_KEY)
+    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.1, api_key=GOOGLE_API_KEY)
 
     def bmi_calculator(weight: float, height: float) -> float:
         """Calculate BMI from weight and height."""
@@ -330,9 +328,6 @@ def run(icon_path: str | Path) -> None:
     """Main function to run the Streamlit app."""
     initialize_session_state()
     
-    # Initialize the agent
-    react_graph = initialize_agent()
-
     icon = Image.open(icon_path)
 
     st.set_page_config(
@@ -343,6 +338,9 @@ def run(icon_path: str | Path) -> None:
     )
 
     st.logo(icon, size="large")
+
+    # Initialize the agent
+    react_graph = initialize_agent()
 
     # Render sections
     render_header()
