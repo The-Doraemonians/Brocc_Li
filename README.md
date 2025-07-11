@@ -39,3 +39,19 @@ To start the Brocc Li application, run the following command:
 ```bash
 streamlit run main.py
 ```
+
+
+### Project Architecture
+
+```
+brocc_li/                  # Python package
+├── __init__.py            # package marker
+├── app.py                 # Streamlit entrypoint: orchestrates UI
+├── agent.py               # Agent initialization, agent state graph, and tool factories
+├── schemas.py             # Pydantic/TypedDict schemas for agent state and chat
+├── state.py               # Streamlit session state helpers
+├── tools.py               # Tool factory functions for agent (make_calculate_bmi_tool, etc.)
+├── ui.py                  # UI composition helpers
+├── utils.py               # Utility functions
+└── ...                    # (other files and folders)
+```
