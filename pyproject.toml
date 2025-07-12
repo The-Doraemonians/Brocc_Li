@@ -13,6 +13,13 @@ dependencies = [
     "streamlit>=1.45.1",
     "streamlit-chat>=0.1.1",
     "streamlit-extras>=0.7.1",
+    "selenium>=4.15.0",
+    "playwright>=1.40.0",
+    "requests>=2.31.0",
+    "beautifulsoup4>=4.12.0",
+    "lxml>=4.9.0",
+    "fake-useragent>=1.4.0",
+    "python-dotenv>=1.0.0",
 ]
 
 [dependency-groups]
