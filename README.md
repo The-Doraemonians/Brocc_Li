@@ -56,6 +56,19 @@ brocc_li/                  # Python package
 └── ...                    # (other files and folders)
 ```
 
+## Test questions
+
+User: "Find grocery stores near Bonn, Germany"
+Agent: ✅ Uses free OpenStreetMap services to find nearby stores
+
+User: "Compare prices for organic milk"
+Agent: ✅ Searches German store websites for price comparison
+
+User: "Find vegetarian pasta recipes"
+Agent: ✅ Searches multiple recipe websites for recipes
+
+
+
 
 ## Features
 
@@ -72,6 +85,8 @@ brocc_li/                  # Python package
 - **🌐 Web Scraping**: Scrape product information from store websites using Selenium
 - **📍 Store Details**: Get detailed store information including hours and exact location
 - **⚖️ Cross-Store Comparison**: Compare prices for multiple products across different stores
+
+
 
 
 #### Store Discovery
