@@ -1,22 +1,12 @@
-# Brocc-Li: Intelligent Diet Assistant
+# Brocc Li
 
-An artificial Dietitian that's actually intelligent, now with comprehensive web search capabilities for grocery shopping, recipe finding, and store discovery.
+## Overview
 
-## Features
+Your Personalized Diet Management Companion.
 
-### Core Diet Assistant
-- **BMI Calculation**: Calculate BMI from weight and height
-- **Diet Preference Extraction**: Extract structured diet preferences from user input
-- **Personalized Diet Planning**: Create customized diet plans based on preferences
+## Setup
 
-### Web Search & Shopping Assistant
-- **🏪 Store Discovery**: Find nearby grocery stores using Google Maps API
-- **💰 Price Comparison**: Compare product prices across major German stores (Rewe, Aldi, Lidl, Edeka)
-- **🎫 Coupon Search**: Find available coupons and deals from various websites
-- **👨‍🍳 Recipe Search**: Search for recipes from popular cooking websites including German sites
-- **🌐 Web Scraping**: Scrape product information from store websites using Selenium
-- **📍 Store Details**: Get detailed store information including hours and exact location
-- **⚖️ Cross-Store Comparison**: Compare prices for multiple products across different stores
+### Prerequisites
 
 - Python 3.11
 - [uv](https://github.com/astral-sh/uv) package manager
@@ -49,6 +39,39 @@ To start the Brocc Li application, run the following command:
 ```bash
 streamlit run main.py
 ```
+
+
+### Project Architecture
+
+```
+brocc_li/                  # Python package
+├── __init__.py            # package marker
+├── app.py                 # Streamlit entrypoint: orchestrates UI
+├── agent.py               # Agent initialization, agent state graph, and tool factories
+├── schemas.py             # Pydantic/TypedDict schemas for agent state and chat
+├── state.py               # Streamlit session state helpers
+├── tools.py               # Tool factory functions for agent (make_calculate_bmi_tool, etc.)
+├── ui.py                  # UI composition helpers
+├── utils.py               # Utility functions
+└── ...                    # (other files and folders)
+```
+
+
+## Features
+
+### Core Diet Assistant
+- **BMI Calculation**: Calculate BMI from weight and height
+- **Diet Preference Extraction**: Extract structured diet preferences from user input
+- **Personalized Diet Planning**: Create customized diet plans based on preferences
+
+### Web Search & Shopping Assistant
+- **🏪 Store Discovery**: Find nearby grocery stores using Google Maps API
+- **💰 Price Comparison**: Compare product prices across major German stores (Rewe, Aldi, Lidl, Edeka)
+- **🎫 Coupon Search**: Find available coupons and deals from various websites
+- **👨‍🍳 Recipe Search**: Search for recipes from popular cooking websites including German sites
+- **🌐 Web Scraping**: Scrape product information from store websites using Selenium
+- **📍 Store Details**: Get detailed store information including hours and exact location
+- **⚖️ Cross-Store Comparison**: Compare prices for multiple products across different stores
 
 
 #### Store Discovery
