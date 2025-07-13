@@ -56,7 +56,19 @@ brocc_li/                  # Python package
 └── ...                    # (other files and folders)
 ```
 
+
+
+
 ## Test questions
+
+to test the usage, u may use the following prompt example:
+```
+I am a 30-year-old female, 165 cm tall and weigh 62 kg. My goal is to lose weight.
+I live in Berlin, Germany, and I don't want to travel more than 2 km for groceries.
+I prefer a vegetarian diet, love Italian cuisine, and am allergic to peanuts.
+I have basic cooking skills and can spend up to 30 minutes per meal.
+My daily food budget is 15 euros, and I would like to prioritize deals and discounts.
+```
 
 User: "Find grocery stores near Bonn, Germany"
 Agent: ✅ Uses free OpenStreetMap services to find nearby stores
