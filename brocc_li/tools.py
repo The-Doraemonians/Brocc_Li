@@ -86,6 +86,42 @@ class RecipeInfo:
     source: str
     url: str
 
+@dataclass
+class NutritionalInfo:
+    calories: float
+    protein: float
+    carbs: float
+    fat: float
+    fiber: float
+    sugar: float
+    sodium: float
+
+@dataclass
+class MealPlan:
+    day: str
+    meals: Dict[str, Dict[str, Any]]  # breakfast, lunch, dinner, snacks
+    total_nutrition: NutritionalInfo
+    total_cost: float
+
+@dataclass
+class ShoppingItem:
+    name: str
+    quantity: str
+    estimated_price: float
+    store: str
+    category: str
+    notes: Optional[str] = None
+
+@dataclass
+class DietReport:
+    user_info: Dict[str, Any]
+    meal_plan: List[MealPlan]
+    shopping_list: List[ShoppingItem]
+    total_weekly_cost: float
+    nutritional_summary: Dict[str, Any]
+    recommendations: List[str]
+    generated_date: str
+
 class FreeMapServices:
     """Free mapping services that don't require API keys."""
     
@@ -560,6 +596,394 @@ def make_web_search_tools():
         'compare_prices_across_stores': compare_prices_across_stores
     }
 
+def make_report_generation_tool(llm: ChatGoogleGenerativeAI):
+    """Create a comprehensive report generation tool."""
+    
+    @tool
+    def generate_diet_report(user_preferences: dict, location: str = "Germany") -> Dict[str, Any]:
+        """
+        Generate a comprehensive diet report with meal plan, nutritional breakdown, costs, and shopping list.
+        
+        Args:
+            user_preferences: User's diet preferences and constraints
+            location: User's location for store recommendations
+        """
+        try:
+            # Extract user information
+            user_info = {
+                'age': user_preferences.get('age'),
+                'gender': user_preferences.get('gender'),
+                'height': user_preferences.get('height'),
+                'weight': user_preferences.get('weight'),
+                'goal': user_preferences.get('goal'),
+                'dietary_restrictions': user_preferences.get('dietary_restrictions', []),
+                'allergies': user_preferences.get('allergies', []),
+                'budget': user_preferences.get('budget'),
+                'cooking_skill': user_preferences.get('cooking_skill', 'intermediate'),
+                'max_cooking_time': user_preferences.get('max_cooking_time', 30)
+            }
+            
+            # Generate meal plan using LLM
+            meal_plan_prompt = f"""
+            Create a 7-day meal plan for a user with these preferences: {user_preferences}
+            
+            Return a JSON object with this structure:
+            {{
+                "meal_plan": [
+                    {{
+                        "day": "Monday",
+                        "meals": {{
+                            "breakfast": {{
+                                "name": "meal name",
+                                "ingredients": ["ingredient 1", "ingredient 2"],
+                                "nutrition": {{"calories": 300, "protein": 15, "carbs": 30, "fat": 10}},
+                                "cost": 2.50,
+                                "prep_time": "10 minutes"
+                            }},
+                            "lunch": {{...}},
+                            "dinner": {{...}},
+                            "snacks": [{{...}}]
+                        }},
+                        "total_nutrition": {{"calories": 1800, "protein": 80, "carbs": 200, "fat": 60}},
+                        "total_cost": 12.50
+                    }}
+                ]
+            }}
+            
+            Ensure the plan meets the user's dietary restrictions, budget, and cooking time constraints.
+            """
+            
+            meal_plan_response = llm.invoke(meal_plan_prompt)
+            meal_plan_content = meal_plan_response.content
+            
+            # Parse meal plan
+            if isinstance(meal_plan_content, list):
+                meal_plan_content = meal_plan_content[0] if meal_plan_content else ""
+            meal_plan_content = str(meal_plan_content).strip()
+            
+            # Extract JSON from response
+            if "```json" in meal_plan_content:
+                start = meal_plan_content.find("```json") + 7
+                end = meal_plan_content.find("```", start)
+                meal_plan_content = meal_plan_content[start:end].strip()
+            
+            try:
+                meal_plan_data = json.loads(meal_plan_content)
+            except json.JSONDecodeError:
+                # Fallback meal plan
+                meal_plan_data = {
+                    "meal_plan": [
+                        {
+                            "day": "Monday",
+                            "meals": {
+                                "breakfast": {
+                                    "name": "Oatmeal with Berries",
+                                    "ingredients": ["oats", "berries", "honey", "milk"],
+                                    "nutrition": {"calories": 300, "protein": 12, "carbs": 45, "fat": 8},
+                                    "cost": 2.50,
+                                    "prep_time": "10 minutes"
+                                },
+                                "lunch": {
+                                    "name": "Vegetarian Pasta",
+                                    "ingredients": ["pasta", "tomatoes", "basil", "olive oil"],
+                                    "nutrition": {"calories": 450, "protein": 15, "carbs": 70, "fat": 12},
+                                    "cost": 3.20,
+                                    "prep_time": "20 minutes"
+                                },
+                                "dinner": {
+                                    "name": "Grilled Chicken Salad",
+                                    "ingredients": ["chicken breast", "lettuce", "tomatoes", "cucumber"],
+                                    "nutrition": {"calories": 350, "protein": 35, "carbs": 15, "fat": 18},
+                                    "cost": 4.80,
+                                    "prep_time": "25 minutes"
+                                }
+                            },
+                            "total_nutrition": {"calories": 1100, "protein": 62, "carbs": 130, "fat": 38},
+                            "total_cost": 10.50
+                        }
+                    ]
+                }
+            
+            # Generate shopping list
+            shopping_list = []
+            all_ingredients = set()
+            
+            for day_plan in meal_plan_data.get("meal_plan", []):
+                for meal_type, meal in day_plan.get("meals", {}).items():
+                    if isinstance(meal, dict) and "ingredients" in meal:
+                        for ingredient in meal["ingredients"]:
+                            all_ingredients.add(ingredient.lower())
+            
+            # Categorize ingredients and estimate prices
+            ingredient_categories = {
+                "proteins": ["chicken", "fish", "eggs", "tofu", "beans", "lentils"],
+                "vegetables": ["tomatoes", "lettuce", "cucumber", "carrots", "onions", "garlic"],
+                "fruits": ["berries", "apples", "bananas", "oranges"],
+                "grains": ["oats", "pasta", "rice", "bread"],
+                "dairy": ["milk", "cheese", "yogurt"],
+                "pantry": ["olive oil", "honey", "salt", "pepper", "basil"]
+            }
+            
+            for ingredient in all_ingredients:
+                category = "other"
+                for cat, items in ingredient_categories.items():
+                    if ingredient in items:
+                        category = cat
+                        break
+                
+                # Estimate price based on category
+                price_estimates = {
+                    "proteins": 3.50,
+                    "vegetables": 1.20,
+                    "fruits": 2.00,
+                    "grains": 1.50,
+                    "dairy": 2.50,
+                    "pantry": 1.00,
+                    "other": 1.50
+                }
+                
+                shopping_item = ShoppingItem(
+                    name=ingredient.title(),
+                    quantity="1 unit",
+                    estimated_price=price_estimates.get(category, 1.50),
+                    store="Rewe",
+                    category=category,
+                    notes=f"Category: {category}"
+                )
+                shopping_list.append(shopping_item.__dict__)
+            
+            # Calculate totals
+            total_weekly_cost = sum(day.get("total_cost", 0) for day in meal_plan_data.get("meal_plan", []))
+            total_shopping_cost = sum(item["estimated_price"] for item in shopping_list)
+            
+            # Generate nutritional summary
+            weekly_nutrition = {
+                "total_calories": sum(day.get("total_nutrition", {}).get("calories", 0) for day in meal_plan_data.get("meal_plan", [])),
+                "avg_daily_calories": sum(day.get("total_nutrition", {}).get("calories", 0) for day in meal_plan_data.get("meal_plan", [])) / 7,
+                "total_protein": sum(day.get("total_nutrition", {}).get("protein", 0) for day in meal_plan_data.get("meal_plan", [])),
+                "total_carbs": sum(day.get("total_nutrition", {}).get("carbs", 0) for day in meal_plan_data.get("meal_plan", [])),
+                "total_fat": sum(day.get("total_nutrition", {}).get("fat", 0) for day in meal_plan_data.get("meal_plan", []))
+            }
+            
+            # Generate recommendations
+            recommendations_prompt = f"""
+            Based on this user profile: {user_preferences}
+            And this meal plan: {meal_plan_data}
+            
+            Provide 3-5 specific, actionable recommendations for:
+            1. Nutritional improvements
+            2. Cost savings
+            3. Time management
+            4. Shopping tips
+            
+            Return as a JSON array of strings.
+            """
+            
+            recommendations_response = llm.invoke(recommendations_prompt)
+            recommendations_content = recommendations_response.content
+            
+            if isinstance(recommendations_content, list):
+                recommendations_content = recommendations_content[0] if recommendations_content else ""
+            recommendations_content = str(recommendations_content).strip()
+            
+            try:
+                if "[" in recommendations_content and "]" in recommendations_content:
+                    start = recommendations_content.find("[")
+                    end = recommendations_content.rfind("]") + 1
+                    recommendations = json.loads(recommendations_content[start:end])
+                else:
+                    recommendations = [
+                        "Consider meal prepping on weekends to save time during the week",
+                        "Buy ingredients in bulk when possible to reduce costs",
+                        "Plan meals around seasonal produce for better prices",
+                        "Use leftovers creatively to minimize food waste"
+                    ]
+            except json.JSONDecodeError:
+                recommendations = [
+                    "Consider meal prepping on weekends to save time during the week",
+                    "Buy ingredients in bulk when possible to reduce costs",
+                    "Plan meals around seasonal produce for better prices",
+                    "Use leftovers creatively to minimize food waste"
+                ]
+            
+            # Create final report
+            report = DietReport(
+                user_info=user_info,
+                meal_plan=meal_plan_data.get("meal_plan", []),
+                shopping_list=shopping_list,
+                total_weekly_cost=total_weekly_cost,
+                nutritional_summary=weekly_nutrition,
+                recommendations=recommendations,
+                generated_date=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            )
+            
+            return report.__dict__
+            
+        except Exception as e:
+            st.error(f"Error generating diet report: {str(e)}")
+            return {"error": f"Failed to generate diet report: {str(e)}"}
+    
+    @tool
+    def generate_shopping_list(meal_plan: List[Dict], location: str = "Germany") -> Dict[str, Any]:
+        """
+        Generate a detailed shopping list from a meal plan with prices and store recommendations.
+        
+        Args:
+            meal_plan: List of daily meal plans
+            location: User's location for store recommendations
+        """
+        try:
+            # Extract all ingredients from meal plan
+            all_ingredients = {}
+            
+            for day in meal_plan:
+                for meal_type, meal in day.get("meals", {}).items():
+                    if isinstance(meal, dict) and "ingredients" in meal:
+                        for ingredient in meal["ingredients"]:
+                            ingredient_lower = ingredient.lower()
+                            if ingredient_lower in all_ingredients:
+                                all_ingredients[ingredient_lower]["quantity"] += 1
+                            else:
+                                all_ingredients[ingredient_lower] = {
+                                    "name": ingredient.title(),
+                                    "quantity": 1,
+                                    "category": "other"
+                                }
+            
+            # Categorize ingredients
+            ingredient_categories = {
+                "proteins": ["chicken", "fish", "eggs", "tofu", "beans", "lentils", "beef", "pork"],
+                "vegetables": ["tomatoes", "lettuce", "cucumber", "carrots", "onions", "garlic", "spinach", "broccoli"],
+                "fruits": ["berries", "apples", "bananas", "oranges", "grapes", "strawberries"],
+                "grains": ["oats", "pasta", "rice", "bread", "quinoa", "couscous"],
+                "dairy": ["milk", "cheese", "yogurt", "butter", "cream"],
+                "pantry": ["olive oil", "honey", "salt", "pepper", "basil", "oregano", "flour", "sugar"]
+            }
+            
+            for ingredient, info in all_ingredients.items():
+                for category, items in ingredient_categories.items():
+                    if ingredient in items:
+                        info["category"] = category
+                        break
+            
+            # Estimate prices and create shopping list
+            price_estimates = {
+                "proteins": 3.50,
+                "vegetables": 1.20,
+                "fruits": 2.00,
+                "grains": 1.50,
+                "dairy": 2.50,
+                "pantry": 1.00,
+                "other": 1.50
+            }
+            
+            shopping_list = []
+            total_cost = 0
+            
+            for ingredient, info in all_ingredients.items():
+                category = info["category"]
+                price = price_estimates.get(category, 1.50) * info["quantity"]
+                total_cost += price
+                
+                shopping_item = ShoppingItem(
+                    name=info["name"],
+                    quantity=f"{info['quantity']} units",
+                    estimated_price=price,
+                    store="Rewe",
+                    category=category,
+                    notes=f"Category: {category}"
+                )
+                shopping_list.append(shopping_item.__dict__)
+            
+            # Group by category
+            categorized_list = {}
+            for item in shopping_list:
+                category = item["category"]
+                if category not in categorized_list:
+                    categorized_list[category] = []
+                categorized_list[category].append(item)
+            
+            return {
+                "shopping_list": shopping_list,
+                "categorized_list": categorized_list,
+                "total_cost": total_cost,
+                "total_items": len(shopping_list),
+                "generated_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            }
+            
+        except Exception as e:
+            st.error(f"Error generating shopping list: {str(e)}")
+            return {"error": f"Failed to generate shopping list: {str(e)}"}
+    
+    @tool
+    def generate_nutritional_analysis(meal_plan: List[Dict]) -> Dict[str, Any]:
+        """
+        Generate detailed nutritional analysis of a meal plan.
+        
+        Args:
+            meal_plan: List of daily meal plans
+        """
+        try:
+            daily_nutrition = []
+            weekly_totals = {
+                "calories": 0,
+                "protein": 0,
+                "carbs": 0,
+                "fat": 0,
+                "fiber": 0,
+                "sugar": 0,
+                "sodium": 0
+            }
+            
+            for day in meal_plan:
+                day_nutrition = day.get("total_nutrition", {})
+                daily_nutrition.append({
+                    "day": day.get("day", "Unknown"),
+                    "nutrition": day_nutrition
+                })
+                
+                for nutrient, value in day_nutrition.items():
+                    if nutrient in weekly_totals:
+                        weekly_totals[nutrient] += value
+            
+            # Calculate averages
+            num_days = len(daily_nutrition)
+            weekly_averages = {
+                nutrient: total / num_days if num_days > 0 else 0
+                for nutrient, total in weekly_totals.items()
+            }
+            
+            # Generate recommendations based on nutrition
+            recommendations = []
+            
+            if weekly_averages["calories"] < 1400:
+                recommendations.append("Consider increasing caloric intake for better energy levels")
+            elif weekly_averages["calories"] > 2200:
+                recommendations.append("Consider reducing caloric intake for weight management")
+            
+            if weekly_averages["protein"] < 50:
+                recommendations.append("Increase protein intake for muscle maintenance and satiety")
+            
+            if weekly_averages["fiber"] < 25:
+                recommendations.append("Add more fiber-rich foods like vegetables, fruits, and whole grains")
+            
+            return {
+                "daily_nutrition": daily_nutrition,
+                "weekly_totals": weekly_totals,
+                "weekly_averages": weekly_averages,
+                "recommendations": recommendations,
+                "analysis_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            }
+            
+        except Exception as e:
+            st.error(f"Error generating nutritional analysis: {str(e)}")
+            return {"error": f"Failed to generate nutritional analysis: {str(e)}"}
+    
+    return {
+        'generate_diet_report': generate_diet_report,
+        'generate_shopping_list': generate_shopping_list,
+        'generate_nutritional_analysis': generate_nutritional_analysis
+    }
 
 def make_calculate_bmi_tool():
     """Create a tool to calculate BMI from weight and height."""

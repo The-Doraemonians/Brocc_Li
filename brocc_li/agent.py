@@ -11,6 +11,7 @@ from brocc_li.tools import (
     make_extract_preferences_tool,
     make_plan_diet_tool,
     make_web_search_tools,
+    make_report_generation_tool,
 )
 
 
@@ -25,6 +26,9 @@ def initialize_agent(api_key: str):
 
     # Get web search tools
     web_tools = make_web_search_tools()
+    
+    # Get report generation tools
+    report_tools = make_report_generation_tool(llm)
 
     # LLM tools
     tools = [
@@ -38,6 +42,9 @@ def initialize_agent(api_key: str):
         web_tools['scrape_store_website'],
         web_tools['get_store_hours_and_location'],
         web_tools['compare_prices_across_stores'],
+        report_tools['generate_diet_report'],
+        report_tools['generate_shopping_list'],
+        report_tools['generate_nutritional_analysis'],
     ]
     llm_with_tools = llm.bind_tools(tools)
 
@@ -53,7 +60,7 @@ def initialize_agent(api_key: str):
             Plan a diet based on user preferences.
 
         search_nearby_stores(location: str, store_types: List[str] = None) -> List[Dict]:
-            Search for nearby grocery stores using Google Maps API.
+            Search for nearby grocery stores using free mapping services.
 
         search_product_prices(product_name: str, location: str = None) -> List[Dict]:
             Search for product prices across different stores (Rewe, Aldi, Lidl, Edeka).
@@ -72,6 +79,15 @@ def initialize_agent(api_key: str):
 
         compare_prices_across_stores(product_list: List[str], location: str) -> Dict:
             Compare prices for multiple products across different stores.
+
+        generate_diet_report(user_preferences: dict, location: str = "Germany") -> Dict:
+            Generate a comprehensive diet report with meal plan, nutritional breakdown, costs, and shopping list.
+
+        generate_shopping_list(meal_plan: List[Dict], location: str = "Germany") -> Dict:
+            Generate a detailed shopping list from a meal plan with prices and store recommendations.
+
+        generate_nutritional_analysis(meal_plan: List[Dict]) -> Dict:
+            Generate detailed nutritional analysis of a meal plan.
         """
 
         sys_msg = SystemMessage(
@@ -86,6 +102,13 @@ You can help users with:
 - Finding coupons and deals
 - Searching for recipes
 - Web scraping store information
+- Generating comprehensive diet reports with meal plans, nutritional analysis, and shopping lists
+
+When users ask for a complete diet plan or report, use the generate_diet_report tool to create a structured plan with:
+- 7-day meal plan with nutritional breakdown
+- Detailed shopping list with estimated costs
+- Nutritional analysis and recommendations
+- Cost breakdown and budget optimization tips
 
 When users ask about shopping, recipes, or store locations, use the appropriate web search tools to provide real-time information."""
         )
@@ -151,15 +174,16 @@ def process_agent_response(user_input: str, state_graph: CompiledStateGraph) -> 
                         current_responses.append("📍 Getting store details...")
                     elif "compare_prices_across_stores" in str(msg):
                         current_responses.append("⚖️ Comparing prices across stores...")
+                    elif "generate_diet_report" in str(msg):
+                        current_responses.append("📊 Generating comprehensive diet report...")
+                    elif "generate_shopping_list" in str(msg):
+                        current_responses.append("🛒 Creating detailed shopping list...")
+                    elif "generate_nutritional_analysis" in str(msg):
+                        current_responses.append("🔬 Analyzing nutritional content...")
 
                     # Add the actual content
                     content = str(msg.content)
                     if content and content.strip() and len(content) > 10:
-                        print('--------------------------------')
-                        print(i)
-                        print(msg)
-                        print(content)
-                        print('--------------------------------')
                         current_responses.append(content)
 
                 # Update the display with current progress
