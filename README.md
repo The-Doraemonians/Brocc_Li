@@ -61,7 +61,7 @@ brocc_li/                  # Python package
 
 ## Test questions
 
-to test the usage, u may use the following prompt example:
+To test the usage, u may use the following basic profile information as a prompt example (age, gender, height, weight, personal goal):
 ```
 I am a 30-year-old female, 165 cm tall and weigh 62 kg. My goal is to lose weight.
 I live in Berlin, Germany, and I don't want to travel more than 2 km for groceries.
