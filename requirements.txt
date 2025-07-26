@@ -1,0 +1,13 @@
+beautifulsoup4>=4.12.0
+fake-useragent>=1.4.0
+langchain-core>=0.3.65
+langchain-google-genai>=2.1.5
+langgraph>=0.4.8
+lxml>=4.9.0
+playwright>=1.40.0
+python-dotenv>=1.0.0
+requests>=2.31.0
+selenium>=4.15.0
+streamlit-chat>=0.1.1
+streamlit-extras>=0.7.1
+streamlit>=1.45.1
