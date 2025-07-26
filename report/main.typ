@@ -44,110 +44,142 @@
   ],
 )
 
+
 #heading(numbering: none)[Abstract]
 
-The abstract is probably what you'll be writing last, and should be roughly 300
-words in length. Your abstract will get published whether or not your team wins
-the challenge, so make sure to do an extra good job of it! An easy way to
-structure your abstract is to write individual summaries of the four parts of
-your paper (Introduction, Methods, Results, Discussion) and then put them
-together once you're done.
+Maintaining a healthy diet is a significant challenge for many, often due to a lack of personalized, accessible, and affordable guidance. This report details the design and implementation of Brocc Li, a personalized diet management companion developed to address this gap. Brocc Li utilizes a large language model (LLM) agent built on a modular, tool-based architecture. The system takes user-specific inputs—such as age, dietary goals, and restrictions—and leverages a suite of specialized tools to perform tasks including preference extraction, recipe searching via web scraping, and nutritional analysis. The primary outputs are comprehensive 7-day meal plans, cost-effective shopping lists, and detailed diet reports with actionable recommendations. Evaluation with test users yielded positive feedback on the system's utility and user-friendliness. However, the project also highlighted key challenges, primarily the data reliability issues inherent in web scraping and the computational complexity of real-time planning. This report discusses these findings, the system's architecture, and outlines a roadmap for future work focused on enhancing data source reliability and optimizing algorithmic performance.
+
+Check the Github repo for more details.
+#footnote[https://github.com/The-Doraemonians/Brocc_Li]
+
 
 #heading(numbering: none, level: 2)[Keywords]
 
-pick, 3-5, good, keywords
+Personalized diet, dialog systems, LLM agent, tool use, health management
+
 
 = Introduction <sec:introduction>
 
-Before we get to the actual introduction, welcome to Overleaf, as well as LaTeX
-itself. Although LaTeX certainly has its quirks, we hope that by contrasting
-the template you see here with the compiled document on the right side, you can
-get an intuitive sense of how to work with it.
+The pursuit of a healthy lifestyle is a universal goal, yet many individuals struggle to maintain a balanced diet. The reasons are multifaceted, ranging from a lack of knowledge about nutrition to the difficulty of balancing dietary needs with budget, convenience, and personal taste. Existing solutions often provide generic advice that fails to account for an individual's unique circumstances, such as specific health goals (e.g., weight loss, muscle gain), dietary restrictions (e.g., vegetarian, gluten-free), and financial constraints. This creates a clear need for an accessible, affordable, and user-friendly diet management solution that can deliver truly personalized guidance.
 
-Another thing before the introduction; here, I'm going attach a citation to
-this sentence #cite(<Goossens1994>). Scroll on down to the bibliography section
-of the LaTeX code if you'd like to see the other end of the built-in references
-system. The numbering is all handled in-house -- you just have to assign each
-reference a key, and Overleaf takes care of the rest.
+To address this problem, we developed Brocc Li, a personalized diet management companion. The project's central objective was to create an intelligent agent capable of generating tailored diet plans that are both nutritionally sound and practical for the user. By leveraging the advanced natural language understanding and generation capabilities of modern Large Language Models (LLMs), Brocc Li aims to act as a personal diet assistant, simplifying the complex process of meal planning and grocery shopping.
 
-On with the actual introduction. Here is where you'd introduce the context
-surrounding your study. What led you to the question you ended up asking? Why
-is it relevant? Which fields of science is your question based around?
-
-While the structure of the previous parts of the introduction can be relatively
-variable, you must make sure to provide a brief overview of the study itself,
-and the methods you used to accomplish it. Obviously, excessive detail is not
-necessary (that's what the next section is for). Lastly, be sure to make
-mention of the potential implications of your findings, but once again remember
-that you'll be going into more detail about that in the discussion.
+This paper documents the journey of creating Brocc Li, from its initial concept to its implementation and evaluation. We begin by detailing the system's architecture and the methods employed in its construction, focusing on its tool-based agent design. We then present the results achieved, including the types of outputs the system generates. Subsequently, we engage in a discussion of our findings, analyzing both the successes and the limitations encountered during the project, particularly regarding data acquisition and computational performance. Finally, we conclude by summarizing our work and proposing concrete directions for future enhancements.
 
 = Materials & Methods <sec:materials-and-methods>
 
-This is where you talk about the methods used to carry out the study. Be as
-concise and to-the-point as possible, and remember - *do not justify your
-methods here!* You simply need to state what you did. You can (and probably
-should) mention the purpose of using a certain computational tool within the
-context of what you set out to achieve, but mentioning things like "it's
-particularly efficient at this and better than all competing computational
-tools" is unnecessary in the methods section. However, you can definitely talk
-about all of this in the discussion, and talk about why your methods are, say,
-the most effective ones for the task.
+The methodology behind Brocc Li is rooted in a modular, agent-based architecture designed to systematically process user needs and generate a complete dietary solution. The overall process can be broken down into four key stages, as illustrated in Figure 1.
+#image("image1.png")
+Figure 1: High-level system methodology. 
 
-Think of this section as a technical manual of sorts, that another team of
-researchers could read and easily follow in order to replicate what you did to
-carry out this study.
+The process flows from initial user input to the final exported report, passing through analysis and planning stages.
 
-Because of the straightforward nature of the methods section, this might be the
-one your team wants to write first. It's essentially you just documenting what
-your team has already done, which should be no problem to write, since you will
-already have an established workflow by this point.
+*User Input*: The system first collects essential information from the user. This includes demographic data (e.g., age), health metrics (e.g., weight, height), dietary goals (e.g., 'lose weight'), and specific dietary restrictions or preferences (e.g., 'vegetarian'). This information is structured into a simple data format for internal processing.
+
+*Search & Analyze*: Using the user's profile, the agent begins a comprehensive search and analysis phase. This involves web scraping for relevant recipes that match the user's preferences and sourcing local store data to estimate costs and ingredient availability. Simultaneously, nutritional information is gathered and analyzed to ensure the proposed meals align with the user's health objectives.
+
+*Generate Diet Plan*: Based on the analyzed data, the agent constructs a personalized 7-day diet plan. This is an optimization task where the agent balances nutritional targets, cost-effectiveness, and user preferences.
+
+*Export Report*: The final output is compiled into user-friendly documents, including the detailed meal plan, a corresponding shopping list, and a nutritional report with recommendations.
+
+2.1 Agent Architecture
+
+At the core of Brocc Li is a tool-using LLM agent. Instead of a single, monolithic model, our system employs a central agent that orchestrates a collection of specialized "tools." Each tool is a distinct function designed to perform a specific task. This modular architecture, shown in Figure 2, provides flexibility and allows for easier debugging and expansion.
+
+The agent was built using a state-graph framework, with the Gemini-2.5-flash model from Google serving as the core reasoning engine. The agent's main role is to interpret the user's request, decide which tool (or sequence of tools) is needed to fulfill it, and execute them accordingly.
+
+#image("image2.png")
+Figure 2: The agent architecture of Brocc Li. 
+
+A central agent utilizes a suite of specialized tools to handle different aspects of the diet planning process.
+
+2.2 Tool Implementation
+
+The key to the system's functionality lies in its tools. The following are the primary tools developed for this project:
+
+*Extract Preferences Tool*: This tool parses the initial user input to create a structured profile. It identifies and categorizes key information like goals and restrictions, making it machine-readable for other tools.
+Calculate BMI Tool: A straightforward utility that calculates the Body Mass Index based on user-provided height and weight, providing a baseline health metric.
+
+*Web Scraping Tools*: A set of functions responsible for dynamically searching for and extracting recipe information and grocery prices from various online sources. This was a critical but challenging component due to the inconsistent structure of websites.
+
+*Report and List Generation Tools*: These tools leverage the LLM's generative capabilities. They take the structured data (user preferences, selected recipes, nutritional analysis) and synthesize it into human-readable outputs:
+Generate Diet Report: Creates a comprehensive summary of the diet plan, including nutritional breakdowns and health recommendations.
+
+*Generate Shopping List*: Compiles all necessary ingredients from the 7-day meal plan into an organized list.
+The tools were defined as Python functions and integrated into the agent's framework. The LLM was prompted to use these functions to achieve its goals, effectively delegating specific tasks to the appropriate module.
 
 = Results <sec:results>
 
-The results section is probably next easiest to write after the Methods
-section, since it essentially boils down to presenting your data. If anything,
-the production of good, high quality figures is the most important and
-potentially time-consuming part of this. However, make sure to not analyze any
-of your results here! All of that belongs in the discussion.
+The development of Brocc Li successfully produced a functional prototype capable of delivering on its core promise: personalized diet management. The system's effectiveness was measured by its ability to generate useful, coherent outputs and through qualitative feedback from test users.
 
-Including figures into LaTeX can seem intimidating at first, but Overleaf makes
-it easy: simply click the 'Project' button above, select 'Files', and upload
-away from your computer. Then, insert the file name into the appropriate
-section of the code below.  Figure 1  shows the output of such code. A guide to
-formatting figures can be found at
-https://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions#Figures.
+*3.1 System Outputs*
 
-```tex
-\begin{figure}
-  \centering
-  \includegraphics[width=0.4\textwidth]{test.png}
-  \caption{Hello!}
-\end{figure}
-```
+The primary results of the system are the tangible outputs it generates for the user.
+Generated Personalized 7-Day Meal Plans: The system successfully created week-long meal plans tailored to individual user profiles. For a user aiming for weight loss with a vegetarian restriction, the plan would consist of three balanced, low-calorie vegetarian meals per day, complete with recipes and preparation instructions. An example of a single day's plan is shown in Table 1.
+
+Table 1: Sample one-day meal plan for a vegetarian user.
+#table(
+  columns: 3,
+  table.header[Meal][Dish][Est. Calories],
+  [Breakfast], [Greek Yogurt with Berries], [300],
+  [Lunch], [Quinoa Salad with Chickpeas], [450],
+  [Dinner], [Lentil and Vegetable Stew], [500],
+)
+
+
+
+Provided Cost-Effective Shopping Lists: By integrating scraped recipe data with local store information, the system generated organized shopping lists. These lists were designed to be cost-effective by grouping ingredients and prioritizing commonly available items.
+
+Delivered Nutritional Analysis with Recommendations: For each generated meal plan, Brocc Li produced a report detailing its nutritional content (e.g., macronutrient ratios, key vitamins, and minerals). The report also included simple, actionable recommendations, such as "Ensure adequate water intake" or "Consider adding a vitamin B12 supplement," based on the user's profile and the generated plan.
+
+*3.2 Evaluation*
+
+To assess the system's real-world utility, we conducted informal testing with a small group of users. They were asked to provide their personal data and evaluate the outputs.
+
+Positive Feedback from Test Users: The feedback was largely positive. Users found the meal plans to be relevant and appreciated the convenience of having a complete plan and shopping list generated automatically. The personalized nature of the recommendations was highlighted as a key strength compared to generic diet apps.
+
+Identified Areas for Improvement: The evaluation also confirmed some of the system's limitations. The most frequently cited issue was the accuracy of the data sourced from web scraping. Occasionally, recipes had incorrect ingredient quantities, or price estimates were outdated. This feedback was crucial in identifying data reliability as a primary area for future improvement.
 
 = Discussion <sec:discussion>
 
-And here is the 'meat' of the paper, so to speak. This is where you interpret
-your results, pointing out interesting trends within your data and how they
-relate to your initial hypothesis. This is also the place to justify your
-methodology, if you're so inclined (i.e. Why did you specifically use a certain
-statistical test over another? Why this tool over that tool?). Lastly, you're
-going to want to discuss potential sources of error. Make sure to make explicit
-reference to figures/tables when discussing your data; it can be helpful to
-walk the reader through your own personal interpretation of each figure in
-order.
+The development of Brocc Li provides valuable insights into both the potential and the challenges of using LLM agents for complex, real-world applications like personalized health management.
+
+*4.1 Interpretation of Results*
+
+The successful generation of coherent and personalized diet plans validates our choice of a tool-based agent architecture. This modular approach proved to be highly effective. The LLM excelled at the "soft" tasks of understanding user intent and generating natural language reports, while the specialized tools handled the "hard", deterministic tasks like calculations and data extraction. This division of labor is a powerful paradigm for building robust AI systems. The positive user feedback further suggests that there is a strong demand for such personalized tools and that our system's outputs were perceived as genuinely useful.
+
+*4.2 Challenges and Limitations*
+
+Despite the successes, the project was not without its challenges. The two most significant limitations were data reliability and computational complexity.
+
+Limited Data Reliability from Web Scraping: Our reliance on web scraping for recipe and pricing information was the system's Achilles' heel. Websites frequently change their layout, breaking the scrapers. Furthermore, the data itself is often unstructured and can be inconsistent or inaccurate (e.g., a recipe blog missing nutritional information). This unreliability directly impacts the quality of the generated diet plans and shopping lists, making it the single most critical issue to address.
+
+Computational Complexity in Real-time Planning: Generating a fully optimized 7-day plan is computationally intensive. The process involves multiple LLM calls, extensive web scraping, and solving a complex optimization problem to balance nutrition, cost, and preference. This resulted in processing times that were not suitable for a real-time, interactive experience. The current implementation is better suited for an "offline" generation model where the user submits a request and receives the plan after a few minutes.
+
+These challenges highlight a trade-off: the flexibility of web scraping comes at the cost of reliability, and the depth of personalization comes at the cost of real-time performance.
+
 
 #heading(numbering: none)[Conclusions]
 
-What are the long-term implications of your findings? Wrap up your discussion
-succinctly while pointing out the significance of your work as well as it what
-it means for the fields you examined as much as possible. Lastly, suggest ideas
-for future studies that could build on your work, and justify why they might be
-useful. Otherwise, you're all done!
+*5.1 Conclusions*
+
+This project successfully demonstrated the feasibility of creating a personalized diet management companion, Brocc Li, using a tool-based LLM agent. The system is capable of interpreting user needs and generating customized 7-day meal plans, shopping lists, and nutritional reports. The modular architecture proved to be a robust and extensible framework for this task. While the prototype was well-received by users, its practical application is currently limited by challenges in data reliability and computational performance. Brocc Li serves as a strong proof-of-concept that lays the groundwork for a more polished and reliable consumer-facing product.
+
+*5.2 Future Work*
+
+Based on the challenges identified, we have outlined a clear path for future development to evolve Brocc Li from a prototype into a production-ready system.
+
+Enhance Data Sources for Better Reliability: The highest priority is to move away from fragile web scraping. Future versions should integrate with stable, structured data sources via APIs. This includes using dedicated nutritional databases (e.g., USDA FoodData Central, Edamam) for accurate food information and partnering with grocery retailers or data aggregators for reliable pricing and availability data.
+
+Optimize Algorithms for Real-time Performance: To make the system more interactive, performance must be improved. We plan to explore several optimization strategies, such as:
+Caching: Caching common recipes and nutritional data to reduce redundant lookups.
+Pre-computation: Pre-processing and storing a large database of recipes to enable faster searching.
+Model Optimization: Using smaller, fine-tuned models for specific, repetitive tasks instead of relying on a large, general-purpose LLM for everything.
+
+Expand Functionality and User Interaction: Once the core system is more robust, we can expand its capabilities. This includes supporting a wider range of dietary preferences (e.g., paleo, keto, food allergies), integrating with fitness trackers to dynamically adjust plans based on activity levels, and developing a more sophisticated conversational interface for a truly interactive "dialog system" experience.
 
 #heading(numbering: none)[Acknowledgements]
 
-Anyone to thank/credit for helping your team along the way? This is the place
-to do it.
+We would like to extend our gratitude to the entire project team for their dedicated contributions. Specifically, we thank Qingyu Zhao for his work on agent pipelining and report generation; Viet Dung Nguyen and Nijat Sadikhov for their efforts in agent pipelining and UI design; and Omar Elsebaey for his programming of the web scraping modules and agent pipeline.
 
 #bibliography("references.bib", title: "References")
