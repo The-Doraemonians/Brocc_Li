@@ -176,6 +176,7 @@ def process_agent_response(user_input: str, state_graph: CompiledStateGraph) -> 
                         current_responses.append("⚖️ Comparing prices across stores...")
                     elif "generate_diet_report" in str(msg):
                         current_responses.append("📊 Generating comprehensive diet report...")
+                        # print(current_responses)
                     elif "generate_shopping_list" in str(msg):
                         current_responses.append("🛒 Creating detailed shopping list...")
                     elif "generate_nutritional_analysis" in str(msg):
@@ -185,7 +186,7 @@ def process_agent_response(user_input: str, state_graph: CompiledStateGraph) -> 
                     content = str(msg.content)
                     if content and content.strip() and len(content) > 10:
                         current_responses.append(content)
-
+              
                 # Update the display with current progress
                 if current_responses:
                     response_placeholder.markdown("\n\n".join(current_responses))

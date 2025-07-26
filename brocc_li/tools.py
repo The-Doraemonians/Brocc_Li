@@ -816,8 +816,12 @@ def make_report_generation_tool(llm: ChatGoogleGenerativeAI):
                 recommendations=recommendations,
                 generated_date=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             )
+
+            response_placeholder = st.empty()
+     
             
-            return report.__dict__
+            return  response_placeholder.markdown("\n\n".join(report.__dict__))
+
             
         except Exception as e:
             st.error(f"Error generating diet report: {str(e)}")
