@@ -204,4 +204,7 @@ Expand Functionality and User Interaction: Once the core system is more robust, 
 
 We would like to extend our gratitude to the entire project team for their dedicated contributions. Specifically, we thank Qingyu Zhao for his work on agent pipelining and report generation; Viet Dung Nguyen and Nijat Sadikhov for their efforts in agent pipelining and UI design; and Omar Elsebaey for his programming of the web scraping modules and agent pipeline.
 
+@Einstein1905
+
 #bibliography("references.bib", title: "References")
+
