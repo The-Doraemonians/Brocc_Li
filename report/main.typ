@@ -24,11 +24,6 @@
         #link("mailto:s05nsadi@uni-bonn.de", "s05nsadi@uni-bonn.de")
       ],
       [
-        Omar Elsebaey \
-        50357345 \
-        #link("mailto:s28oelse@uni-bonn.de", "s28oelse@uni-bonn.de")
-      ],
-      [
         Qingyu Zhao \
         50357949 \
         #link("mailto:s18qzhao@uni-bonn.de", "s18qzhao@uni-bonn.de")
@@ -37,6 +32,11 @@
         Viet Dung Nguyen \
         50348141 \
         #link("mailto:s18vnguy@uni-bonn.de", "s18vnguy@uni-bonn.de")
+      ],
+      [
+        Omar Elsebaey \
+        50357345 \
+        #link("mailto:s28oelse@uni-bonn.de", "s28oelse@uni-bonn.de")
       ],
     )
 
@@ -47,7 +47,7 @@
 
 #heading(numbering: none)[Abstract]
 
-Maintaining a healthy diet is a significant challenge for many, often due to a lack of personalized, accessible, and affordable guidance. This report details the design and implementation of Brocc Li, a personalized diet management companion developed to address this gap. Brocc Li utilizes a large language model (LLM) agent built on a modular, tool-based architecture. The system takes user-specific inputs—such as age, dietary goals, and restrictions—and leverages a suite of specialized tools to perform tasks including preference extraction, recipe searching via web scraping, and nutritional analysis. The primary outputs are comprehensive 7-day meal plans, cost-effective shopping lists, and detailed diet reports with actionable recommendations. Evaluation with test users yielded positive feedback on the system's utility and user-friendliness. However, the project also highlighted key challenges, primarily the data reliability issues inherent in web scraping and the computational complexity of real-time planning. This report discusses these findings, the system's architecture, and outlines a roadmap for future work focused on enhancing data source reliability and optimizing algorithmic performance.
+Maintaining a healthy diet is a significant challenge for many, often due to a lack of personalized, accessible, and affordable guidance. This report details the design and implementation of Brocc Li, a personalized diet management companion developed to address this gap. Brocc Li utilizes LLM agent built on a modular, tool-based architecture. The system takes user-specific inputs—such as age, dietary goals, and restrictions—and leverages a suite of specialized tools to perform tasks including preference extraction, recipe searching via web scraping, and nutritional analysis. The primary outputs are comprehensive 7-day meal plans, cost-effective shopping lists, and detailed diet reports with actionable recommendations. Evaluation with test users yielded positive feedback on the system's utility and user-friendliness. However, the project also highlighted key challenges, primarily the data reliability issues inherent in web scraping and the computational complexity of real-time planning. This report discusses these findings, the system's architecture, and outlines a roadmap for future work. 
 
 Check the Github repo for more details.
 #footnote[https://github.com/The-Doraemonians/Brocc_Li]
@@ -68,9 +68,12 @@ This paper documents the journey of creating Brocc Li, from its initial concept 
 
 = Materials & Methods <sec:materials-and-methods>
 
-The methodology behind Brocc Li is rooted in a modular, agent-based architecture designed to systematically process user needs and generate a complete dietary solution. The overall process can be broken down into four key stages, as illustrated in Figure 1.
-#image("image1.png")
-Figure 1: High-level system methodology. 
+The methodology behind Brocc Li is rooted in a modular, agent-based architecture designed to systematically process user needs and generate a complete dietary solution. The overall process can be broken down into four key stages, as illustrated in @image1.
+
+#figure(
+  image("image1.png", width: 70%),
+  caption: [High-level system methodology.],
+) <image1>
 
 The process flows from initial user input to the final exported report, passing through analysis and planning stages.
 
@@ -84,12 +87,17 @@ The process flows from initial user input to the final exported report, passing 
 
 2.1 Agent Architecture
 
-At the core of Brocc Li is a tool-using LLM agent. Instead of a single, monolithic model, our system employs a central agent that orchestrates a collection of specialized "tools." Each tool is a distinct function designed to perform a specific task. This modular architecture, shown in Figure 2, provides flexibility and allows for easier debugging and expansion.
+At the core of Brocc Li is a tool-using LLM agent. Instead of a single, monolithic model, our system employs a central agent that orchestrates a collection of specialized "tools." Each tool is a distinct function designed to perform a specific task. This modular architecture, shown in @image2, provides flexibility and allows for easier debugging and expansion.
 
 The agent was built using a state-graph framework, with the Gemini-2.5-flash model from Google serving as the core reasoning engine. The agent's main role is to interpret the user's request, decide which tool (or sequence of tools) is needed to fulfill it, and execute them accordingly.
 
-#image("image2.png")
-Figure 2: The agent architecture of Brocc Li. 
+
+#figure(
+  image("image2.png", width: 100%),
+  caption: [The agent architecture of Brocc Li.],
+) <image2>
+
+
 
 A central agent utilizes a suite of specialized tools to handle different aspects of the diet planning process.
 
