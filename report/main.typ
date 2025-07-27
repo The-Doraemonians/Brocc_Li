@@ -123,16 +123,19 @@ The development of Brocc Li successfully produced a functional prototype capable
 *3.1 System Outputs*
 
 The primary results of the system are the tangible outputs it generates for the user.
-Generated Personalized 7-Day Meal Plans: The system successfully created week-long meal plans tailored to individual user profiles. For a user aiming for weight loss with a vegetarian restriction, the plan would consist of three balanced, low-calorie vegetarian meals per day, complete with recipes and preparation instructions. An example of a single day's plan is shown in Table 1.
+Generated Personalized 7-Day Meal Plans: The system successfully created week-long meal plans tailored to individual user profiles. For a user aiming for weight loss with a vegetarian restriction, the plan would consist of three balanced, low-calorie vegetarian meals per day, complete with recipes and preparation instructions. An example of a single day's plan is shown in @table1.
 
 Table 1: Sample one-day meal plan for a vegetarian user.
-#table(
+#figure(
+table(
   columns: 3,
   table.header[Meal][Dish][Est. Calories],
   [Breakfast], [Greek Yogurt with Berries], [300],
   [Lunch], [Quinoa Salad with Chickpeas], [450],
   [Dinner], [Lentil and Vegetable Stew], [500],
-)
+  ),
+  caption: [Sample one-day meal plan for a vegetarian user],
+)<table1>
 
 
 
