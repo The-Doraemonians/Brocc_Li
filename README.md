@@ -24,12 +24,12 @@ Your Personalized Diet Management Companion.
    ```bash
    pip install -r requirements
    ```
-3. Create a virtual environment (optinal):
+3. Create a virtual environment ( optional):
 
    ```bash
    uv venv
    ```
-4. Install the required packages using `uv` (optinal):
+4. Install the required packages using `uv` (optional):
 
    ```bash
    uv sync
