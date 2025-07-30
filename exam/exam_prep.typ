@@ -121,7 +121,9 @@
 
 
   7. Describe *grounding* in dialog systems and name at least two grounding signals, each briefly explained in a sentence.
+  #answer-box[
 
+  ]
   8. What are anaphora and cataphora, and why are they problematic for dialog systems?
 
   9. What is adaptation/entrainment in dialog, and in what forms does it take place?
@@ -192,36 +194,162 @@
   34. What is the pros and cons of a template-based natural language generator?
 
   35. Name and explain the components of the trainable generator pipeline (by Walker).
-
+  #answer-box[
+    + *Sentence plan generator*:
+      - Produces multiple sentence plans for a given dialogue act (or set of dialogue acts) and governs which information should be given in which order.
+    + *Sentence plan reranker*:
+      - Ranks possible candidates.
+    + *Surface realiser*:
+      - Turns the top candidate into an utterance.
+  ]
   36. How does class-based language modeling work for NLG?
+  #answer-box[
+    *Classes*:
+    #[
+      - _inform_area_
+      - _inform_address_
+      - _inform_phone_
+      - _request_area_
+      - ...
+    ]
+
+    *Generation process*:
+    + Generate utterances by sampling words from a particular class language model in which the dialogue act belongs to.
+    + Re-rank utterances according to scores.
+  ]
 
   37. How does an RNN network improve NLG over its predecessors? In other words, what are its main features?
+  #answer-box[
+    - An RNN (Recurrent Neural Network) as a language generator improves over its predecessors due to its natural ability to model sequences.
 
+    - Main features:
+      - *Handling Long-Term Dependencies*
+      - *Flexibility to Condition on Auxiliary Inputs*
+  ]
   38. How does LSTM prevent the vanishing gradient problem?
+  #answer-box[
+    - Consider memory cell, where recurrence actually happens:
+      $
+        C_t = i_t ⊙ Ĉ_t + f_t ⊙ C_(t - 1)
+      $
+    - We can back-propagate the gradient by chain rule:
+      $
+        (∂ E_t) / (∂ C_(t - 1))
+        =
+        (∂ E_t) / (∂ C_t)
+        (∂ C_t) / (∂ C_(t - 1))
+        =
+        ((∂ E_t) / (∂ C_t)) f_t
+      $
+  ]
 
   39. Why can a semantically conditioned LSTM be better than a non-conditional LSTM?
+  #answer-box[
+    - A semantically conditioned LSTM can be better than a non-conditional LSTM because it incorporates additional semantic information into the generation process, allowing it to produce more contextually relevant and coherent responses.
+    - This conditioning helps the model to focus on specific aspects of the dialog state, leading to improved performance in generating appropriate utterances.
+  ]
 
   40. What distinguishes GPT-3 from earlier GPT models?
+  #answer-box[
+    - Effectively the same model structure with substantially more parameters and training data:
+
+    #table(
+      columns: 4,
+      inset: .75em,
+      align: center + horizon,
+
+      [], [GPT], [GPT-2], [GPT-3],
+      [Parameters], [117M], [1.5B], [175B],
+      [Data], [12GB], [40GB], [570GB],
+    )
+  ]
 
   41. What is a major drawback of GPT, as well as semantically conditioned GPT?
+  #answer-box[
+    - *Cons*: produces hallucinations
+  ]
 
   42. What are the three key elements in each dialog turn in dialog management?
+  #answer-box[
+    + *Actions*: What the system says.
+    + *States*: What the user wants.
+    + *Observations*: What the system hears.
+  ]
 
   43. What are the three main challenges in modeling dialog, and how does defining it as a control problem provide a solution?
+  #answer-box[
+    + How to define the state space?
+    + How to tractably maintain the dialogue state?
+    + Which actions to take?
+
+    - *Solution*: Define dialogue as a control problem where the behaviour can be automatically learned.
+  ]
 
   44. How is dialog management framed in a Markov Decision Process (MDP)?
+  #answer-box[
+    + *Data*:
+      - Dialogue states
+      - Reward: a measure of dialogue quality
+    + *Model*:
+      - Markov decision process
+    + *Predictions*:
+      - Optimal system actions
+
+    #line(length: 100%, stroke: (paint: blue, thickness: 1pt, dash: "dashed"))
+
+    - *$s_t$*:  dialogue states
+    - *$a_t$*:  system actions
+    - *$r_t$*:  rewards
+    - *$p(s_(t+1) | s_t, a_t)$*: transition probability
+  ]
 
   45. What is the main difference between generative and discriminative models in belief tracking?
+  #answer-box[
+    - *Discriminative models*: focus on the relationship between observations and states without modeling how the observations were generated.
+    - *Generative models*: model both the states and the observations, considering how states generate observations. The probability of the state depends on how likely it is that this state generated the given observation, combined with our prior belief about the state itself.
+  ]
 
   46. Why is exact belief tracking intractable in partially observable MDP-based dialog systems?
+  #answer-box[
+    - Requires summation over all possible states at every dialogue turn - *intractable*!
+  ]
 
   47. Name and explain three requirements for belief tracking.
+  #answer-box[
+    + *Dialogue history*: The system needs to keep track of what happened so far in the dialogue. This is normally done via the *Markov property*.
+    + *Task-orientated dialogue*: The system needs to know what the user wants. This is modelled via the *user goal*.
+    + *Robustness to errors*: The system needs to know what the user says. This is modelled via the *user act*.
+  ]
 
   48. What is the Hidden Information State (HIS) model in dialog systems, and how does it address the challenges of belief tracking in partially observable environments?
+  #answer-box[
+    - The Hidden Information State (HIS) model is a practical framework for POMDP-based spoken dialogue management.
+
+    - It addresses the challenges of belief tracking in partially observable environments by structuring the belief state around several components:
+      + *Observation*: N-best list of user acts
+      + *User Goal*: Partitions of the goal space built according to ontology
+      + *Dialogue history*: Grounding states
+      + *Hypotheses*: Every combination of user act, partition and history
+
+    - *Belief state*: Distribution over most likely hypotheses
+  ]
 
   49. What is the Bayesian Update of Dialogue State (BUDS) model, and how does it improve upon previous approaches like the Hidden Information State (HIS) model in belief tracking?
+  #answer-box[
+    - The Bayesian Update of Dialogue State (BUDS) model is an advancement in POMDP frameworks for spoken dialogue systems.
+
+    - Improve upon previous approaches by:
+      - Further decomposes the dialogue state
+      - Produces tractable belief state update
+      - Transition and observation probability distributions can be parametrized and their shape learned
+  ]
 
   50. Why is grounding important in open-domain dialog systems?
+  #answer-box[
+    - Prevent hallucinations and improve factual accuracy
+    - Improve trustworthiness and transparency
+    - Respond accurately on dynamic or rare topics
+  ]
 
   51. What is Retrieval-Augmented Generation (RAG), and how does it work? Name and explain its two main components.
 
