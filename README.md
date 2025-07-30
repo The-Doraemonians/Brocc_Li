@@ -19,12 +19,17 @@ Your Personalized Diet Management Companion.
    git clone https://github.com/The-Doraemonians/Brocc_Li.git
    cd Brocc_Li
    ```
-2. Create a virtual environment (recommended):
+2. If you are using pip:
+   
+   ```bash
+   pip install -r requirements
+   ```
+3. Create a virtual environment (optinal):
 
    ```bash
    uv venv
    ```
-3. Install the required packages using `uv`:
+4. Install the required packages using `uv` (optinal):
 
    ```bash
    uv sync
