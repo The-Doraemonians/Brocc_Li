@@ -207,7 +207,7 @@ Expand Functionality and User Interaction: Once the core system is more robust, 
 
 #heading(numbering: none)[Acknowledgements]
 
-We would like to extend our gratitude to the entire project team for their dedicated contributions. Specifically, we thank Qingyu Zhao for his work on agent pipelining, tools implementation,agent report generation; Viet Dung Nguyen and Nijat Sadikhov for their efforts in agent pipelining, tools implementation, UI design; and Omar Elsebaey for his project setup and ideas.
+We would like to extend our gratitude to the entire project team for their dedicated contributions. Specifically, we thank Qingyu Zhao for his work on agent pipelining, tools implementation, agent report generation; Viet Dung Nguyen and Nijat Sadikhov for their efforts in agent pipelining, tools implementation, UI design; and Omar Elsebaey for his project setup and ideas.
 
 
 
