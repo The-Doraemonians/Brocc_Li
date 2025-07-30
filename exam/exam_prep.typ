@@ -58,10 +58,10 @@
 
     + Write the initials (e.g., DM for Dialog Manager) of the dialog component next to the statement that best matches it:
 
-      - Keeps track of the users goals: #writing-area()[]
-      - Historically involved sentence planning and surface realization: #writing-area()[]
-      - Proposes an assignment of values to slots from an ontology: #writing-area()[]
-      - Typically learned through reinforcement learning and decides what action to take next: #writing-area()[]
+      - Keeps track of the users goals: #writing-area()[DST]
+      - Historically involved sentence planning and surface realization: #writing-area()[POL]
+      - Proposes an assignment of values to slots from an ontology: #writing-area()[NLU]
+      - Typically learned through reinforcement learning and decides what action to take next: #writing-area()[NLG]
 
   ]
 
@@ -78,10 +78,9 @@
     + *Educational*:
       - Example: Tutoring systems, language learning assistants, interactive quizzes.
   ]
-
   3. What is turn‑taking in dialog and why is it difficult for a dialog system to handle it? Name and explain at least two reasons.
   #answer-box[
-
+    handcrafted and check data
   ]
   4. How is speech different from text for dialog systems? Name five differences.
   #answer-box[
@@ -106,7 +105,6 @@
       - Example: "You’re fired!"
   ]
   6. Given the following exchange between A and B, which of Grice’s maxims is most clearly broken? What is the implicature of this broken maxim?
-
   #[
     #set enum(numbering: "(a)", indent: 1em)
     + Person A: Did you study enough for the exam?
@@ -118,22 +116,46 @@
     #align(center)[Quantity, Quality, Relation, Manner]
 
   ]
-
+  #answer-box[
+    - *Broken maxims*: Quantity, Relation
+    - *Implicature*: Person B states too much information and does not answer the question directly, suggesting they did not study enough for the exam.
+  ]
 
   7. Describe *grounding* in dialog systems and name at least two grounding signals, each briefly explained in a sentence.
   #answer-box[
-
+    + *Grounding* ensures mutual understanding.
+    + *Grounding signals*:
+      - *Implicit*: confirm without state it
+      - *Explicit*: confirm message
   ]
   8. What are anaphora and cataphora, and why are they problematic for dialog systems?
-
+  #answer-box[
+    - *Anaphora*: refers to entities mentioned earlier in the conversation.
+    - *Cataphora*: refers to entities mentioned later in the conversation.
+    - *Problematic*: Dialog systems may struggle to resolve these references without sufficient context, leading to misunderstandings or incorrect responses.
+  ]
   9. What is adaptation/entrainment in dialog, and in what forms does it take place?
-
+  #answer-box[
+    *Adaptation/Entrainment* refers to the phenomenon where speakers adjust their language, style, or behavior to align with their conversational partner. It can take place in various forms, including:
+    - *Lexical entrainment*: using similar words or phrases.
+    - *Syntactic entrainment*: adopting similar sentence structures.
+    - *Prosodic entrainment*: matching speech rate, tone, and rhythm.
+  ]
   10. You have developed a function to measure lexical entrainment over the turns in a conversation. You apply this to a dataset of human–machine conversations with your system and find that over time, the entrainment increases. What does this tell you about your system?
 
   11. What is the difference between a chatbot and a dialog system?
-
+  #answer-box[
+    - A *chatbot* is a system that only response to the inputs relied on static knowledge.
+    - A *dialog system* is an interface to an external knowledge source with the main goal is to retrieve information from the knowledge source.
+  ]
   12. What is an ontology, and how are the ontology slots distinguished from one another?
-
+  #answer-box[
+    - An *ontology* is a structured description of the external knowledge that defines the Domain, Slot, and Value.
+    - *Ontology slots* are distinguished by 3 types based on their values:
+      - Categorical: one of the possible values
+      - Binary: True/False values
+      - Non-Categorical: number of values is not limited
+  ]
   13. Explain and give examples for the two semantic concepts in dialog acts.
   #answer-box[
     + *intent or dialogue act type*:
@@ -152,29 +174,76 @@
       - out-of-domain reply?
       - switching to chat-oriented dialogue?
   ]
-
   15. Name and explain two methods for using ASR hypotheses for the NLU inputs. Explain why one is more robust than the other. Explain the ways for NLU prediction using ASR hypotheses.
-
+  #answer-box[
+    - *top ASR hypothesis*: Features are extracted directly from single best hypothesis and the classification is performed into relevant semantic classes.
+    - *N-best list of ASR hypothesis*: This method uses multiple ASR hypotheses to provide a more comprehensive input for NLU.
+    - N-best list of ASR hypothesis is *more robust* because it incorporates uncertainty in ASR output, reducing the chance of NLU errors.
+    - *NLU prediction using ASR hypotheses*: the goal is to obtain p(d|a), which is the probability of a dialogue act d given the audio signal a.
+  ]
   16. Give an example of a word confusion network for ASR and explain its benefit.
-
+  #figure(
+    image("images/word_confusion.png", width: 80%),
+    caption: [
+      A word confusion network example.
+    ],
+  )
+  #answer-box[
+    *Benefit*: It allows NLU systems to consider multiple interpretations of the input, improving robustness against ASR errors.
+  ]
   17. Explain how NLU can be formulated as a sequence-to-sequence learning task.
-
+  #answer-box[
+    NLU can be formulated as a sequence-to-sequence learning task by treating the input utterance as a sequence of tokens and the output as a sequence of semantic representations, such as dialog acts or slot-value pairs.
+  ]
   18. What is MLM (Masked Language Modeling)?
-
+  #answer-box[
+    *Masked Language Modeling* is a self-supervised learning technique where certain tokens in a sentence are masked, and the model learns to predict them based on the surrounding context.
+  ]
   19. Name two challenges for modular dialog system architecture and explain the hybrid approach as its solution.
-
+  #answer-box[
+    + *Challenges*:
+      - Modular approaches suffer from information loss between the components.
+      - Labeled data not always available to train individual modules.
+    + *Hybrid approach*:
+      - Combines modular and end-to-end approaches to leverage the strengths of both.
+      - Allows for flexibility in component design while ensuring overall system coherence.
+  ]
   20. What is delexicalization, and why is it useful?
-
+  #answer-box[
+    - *Delexicalization* is the process of replacing specific values in a dialog system with placeholders, allowing the system to generalize across different instances of the same dialog act.
+    - *Usefulness*: It helps solve data sparsity.
+  ]
   21. What are some challenges associated with dialog state tracking? Name at least four.
-
+  #answer-box[
+    *Challenges*:
+      - Process long context.
+      - Remember past information.
+      - Infer/Extract implicit information.
+      - Solve coreference.
+  ]
   22. Explain the two main approaches to dialog state tracking.
-
+  #answer-box[
+    + *Picklist-based*: Given full ontology, perform prediction over slot-value pairs. Good performance on small datasets, but difficult to scale.
+    + *Span-based*: Directly extract slot values from dialogue context. No need for candidate pairs, but struggles with more subtle cases such as implicit choice.
+  ]
   23. What are the automatic and human metrics that can be used for NLG? (Name three for each and explain.)
-
+  #answer-box[
+    + *Automatic metrics*:
+      - *BLEU*: is a precision-based metric that compares n-gram overlap between generated text and reference text.
+      - *ROUGE*: is a recall-based metric that compares n-gram overlap between generated text and reference text.
+      - *BERTScore*: Measures contextual embedding similarity.
+    + *Human metrics*:
+      - *Naturalness*: Evaluates how natural and grammatically correct the generated text is.
+      - *Informativeness*: Compare the relevance between the generated text and the input or context.
+      - *Coherence*: Measures how logically consistent and well-structured the generated text is.
+  ]
   24. What is the interpretation of perplexity as an NLG metric?
 
   25. What is the main difference between BERTScore and other metrics, such as ROUGE and METEOR, in NLG evaluation?
-
+  #answer-box[
+    - *BERTScore* measures the semantic similarity between generated text and reference text by comparing their contextual embeddings
+    - *ROUGE* and *METEOR* focus on n-gram overlap.
+  ]
   26. Explain three things one must consider when evaluating a dialog system with volunteers.
 
   27. Name and explain three evaluation factors to be included in the questionnaire of human evaluators for task-oriented and chat-oriented systems.
