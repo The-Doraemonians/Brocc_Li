@@ -80,7 +80,10 @@
   ]
   3. What is turn‑taking in dialog and why is it difficult for a dialog system to handle it? Name and explain at least two reasons.
   #answer-box[
-    handcrafted and check data
+    - *Turn-taking* is the process of alternating speaking turns between speakers in a conversation.
+    - Difficulties for dialog systems:
+      + *Complex human cues*: Systems may struggle to predict when to respond, leading to interruptions or delays.
+      + *Overlaps*: Natural conversations often have overlapping speech, which can confuse systems that expect clear turn boundaries.
   ]
   4. How is speech different from text for dialog systems? Name five differences.
   #answer-box[
@@ -228,40 +231,87 @@
   ]
   23. What are the automatic and human metrics that can be used for NLG? (Name three for each and explain.)
   #answer-box[
-    + *Automatic metrics*:
+    - *Automatic metrics*:
       - *BLEU*: is a precision-based metric that compares n-gram overlap between generated text and reference text.
       - *ROUGE*: is a recall-based metric that compares n-gram overlap between generated text and reference text.
       - *BERTScore*: Measures contextual embedding similarity.
-    + *Human metrics*:
+    - *Human metrics*:
       - *Naturalness*: Evaluates how natural and grammatically correct the generated text is.
       - *Informativeness*: Compare the relevance between the generated text and the input or context.
       - *Coherence*: Measures how logically consistent and well-structured the generated text is.
   ]
   24. What is the interpretation of perplexity as an NLG metric?
-
+  #answer-box[
+    *Perplexity* is a measure of how well a language model predicts a sample. The lower the perplexity, the less confused the model is in making its predictions
+  ]
   25. What is the main difference between BERTScore and other metrics, such as ROUGE and METEOR, in NLG evaluation?
   #answer-box[
     - *BERTScore* measures the semantic similarity between generated text and reference text by comparing their contextual embeddings
     - *ROUGE* and *METEOR* focus on n-gram overlap.
   ]
   26. Explain three things one must consider when evaluating a dialog system with volunteers.
-
+  #answer-box[
+    + *Volunteer Recruitment*: recruit volunteers from a variety of demographics.
+    + *Dialogue Task Design*: must be carefully designed.
+    + *Researcher Interference*: Researcher should not interfere with the interaction.
+  ]
   27. Name and explain three evaluation factors to be included in the questionnaire of human evaluators for task-oriented and chat-oriented systems.
-
+  #answer-box[
+    - *Task-oriented systems*:
+      + *Repetition*: How repetitive was the system?
+      + *Making sense:*: How often did the system say something which did NOT make sense?
+      + *Fluency*: How grammatical was the language?
+    - *Chat-oriented systems*:
+      + *Interestingness*: How interesting or boring did you find this conversation?
+      + *Inquisitiveness*: How much did the user try to get to know you?
+      + *Engagement*: How much did you enjoy talking to this user?
+  ]
   28. What are the advantages and disadvantages of crowd-sourcing? Name two for each.
-
+  #answer-box[
+    - *Advantages*:
+      - Scaling up and speeding up evaluation.
+      - Reduced cost.
+    - *Disadvantages*:
+      - Reduced quality of interactions.
+      - Difficultly controlling who enters the experiment.
+  ]
   29. How does a data-driven automatic dialog measure work, and what are its problems?
-
+  #answer-box[
+    - *Data-driven automatic dialog measure* can be trained from a human-labeled dataset with scores. The model then predict the evaluation score for an unseen dialogue. 
+    - *Problems*: domain-dependence, lack of interpretability, single output, susceptibility to adversarial attacks
+  ]
   30. What are the benefits and drawbacks of using prompting for dialog evaluation?
-
+  #answer-box[
+    - *Benefits*:
+      - Intuitive, can express more nuanced criteria.
+      - Time and cost effective.
+      - More and more powerful models now available.
+    - *Drawbacks*:
+      - Result may be model and prompt dependent.
+      - LLMs have biases, optimizing for LLM evaluation may create a feedback loop that exacerbates these biases.
+      - Data contamination.
+  ]
   31. What are the two main features of an ideal evaluation metric?
-
+  #answer-box[
+    + Automatic and thus repeatable.
+    + Correlates highly with human judgement.
+  ]
   32. What is the antibiotic effect in the context of dialog evaluation metrics?
-
+  #answer-box[
+    The *antibiotic effect* is the phenomenon where optimization on one fixed automatic metric can lead to models that exploit weaknesses in the metric rather than truly improving performance.
+  ]
   33. Name and explain the factors that make an NLG system good.
-
+  #answer-box[
+    + *Adequacy*: correct meaning.
+    + *Fluency*: linguistic fluency.
+    + *Readability*: fluency in dialogue context.
+    + *Variation*: multiple realisations for the same concept.
+  ]
   34. What is the pros and cons of a template-based natural language generator?
-
+  #answer-box[
+    - *Pros*: simple, usually error free, controllable
+    - *Cons*: time consuming, rigid, not scalable
+  ]
   35. Name and explain the components of the trainable generator pipeline (by Walker).
   #answer-box[
     + *Sentence plan generator*:
