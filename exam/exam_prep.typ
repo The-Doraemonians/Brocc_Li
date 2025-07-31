@@ -166,6 +166,13 @@
       - encodes the system or the user intention in a (part of) dialogue turn
     + *semantic slots and values*:
       - further describe entities from the ontology that a dialogue turn refers to
+
+    #figure(
+      image("images/intent_semantic_example.png", width: 80%),
+      caption: [
+        Examples for the two semantic concepts.
+      ],
+    )
   ]
   14. Name and explain three challenges in NLU.
   #answer-box[
