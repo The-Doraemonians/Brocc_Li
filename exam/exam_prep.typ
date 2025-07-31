@@ -219,11 +219,11 @@
   ]
   21. What are some challenges associated with dialog state tracking? Name at least four.
   #answer-box[
-    - *Challenges*:
-      - Process long context.
-      - Remember past information.
-      - Infer/Extract implicit information.
-      - Solve coreference.
+    *Challenges*:
+    - Process long context.
+    - Remember past information.
+    - Infer/Extract implicit information.
+    - Solve coreference.
   ]
   22. Explain the two main approaches to dialog state tracking.
   #answer-box[
@@ -700,52 +700,163 @@
   ]
 
   76. Name and explain five scenarios when retrieval-based LMs should be used.
-
+  #answer-box[
+    + When the task requires frequent updates.
+    + When access to long-tail or less popular knowledge is crucial.
+    + When high verifiability is required.
+    + When the parameter efficiency is a priority.
+    + When the privacy of data is a concern.
+  ]
   77. What is an agent?
-
+  #answer-box[
+    An *agent* is artificial entity that enhance LLMs with essential capabilities enabling them to sense their environment, make decisions, and take actions.
+  ]
   78. Name and explain the two competing views on agents.
-
+  #answer-box[
+    + *LLM-first view*: We make an LLM into an agents.
+    + *Agent-first view*: We integrate LLMs into AI agents so they can use language for reasoning and communication.
+  ]
   79. What is the fundamental difference between current and classic agents?
-
+  #answer-box[
+    Contemporary AI agents, with integrated LLM(s), can use language as a vehicle for reasoning and communication
+  ]
   80. Name three types of AI agents and compare them in terms of expressiveness, reasoning and adaptivity.
+  #answer-box[
+    #table(
+      columns: 4,
+      inset: .75em,
+      align: center + horizon,
 
+      [], [Logical Agent], [Neural Agent], [Language Agent],
+      [Expressiveness], [Low], [Medium], [High],
+      [Reasoning], [Logical inferences], [Parametric inferences], [Language-based inferences],
+      [Adaptivity], [Low], [Medium], [High],
+    )
+  ]
   81. Name and explain three methods that can be used to teach LLMs how to properly use tools.
-
+  #answer-box[
+    + *Prompting*: Instruct the LLM to use a specific tool by defining in prompt.
+    + *Reinforcement Learning*: Autonomous exploration and correction of errors based on environmental feedback through reinforcement learning. Agent learns to select appropriate tools by maximizing rewards.
+    + *Self-supervised*: Pre-defined tool APIs and encourage models to call and execute tool APIs.
+  ]
   82. What is the ReAct agent, and what are its benefits?
-
+  #answer-box[
+    - The *ReAct agent* is a new paradigm of agents that reason and act to achieve tasks.
+    - *Benefits*:
+      - Synergy of Reasoning and Acting.
+      - Simple and intuitive to use.
+      - General across domains.
+  ]
   83. What are the four components of the unified framework for LLM agents?
-
+  #answer-box[
+    + *Profile*
+    + *Memory*
+    + *Planning*
+    + *Action*
+  ]
   84. What is multi-agent orchestration, and why do we need it?
-
+  #answer-box[
+    - *Multi-agent orchestration* is the process of managing multiple agents to work together effectively.
+    - We need it to:
+      + Enable collaboration between agents.
+      + Improving scalability and robustness when dealing with complex tasks.
+      + Optimize resource allocation and task distribution.
+  ]
   85. Give two examples of a multi-agent system and explain how they work.
-
+  #answer-box[
+    + *Retrieval-Augmented QA*: includes 2 agents, a retriever and a generator, that work together to answer questions by retrieving relevant information and generating responses.
+    + *Decision Making*: 2 agents, one suggests next step, executor does action and provides feedback.
+  ]
   86. What are two potential risks of multi-agent systems, and why are they difficult to deal with?
-
+  #answer-box[
+    + Leaking private data
+    + Causing financial loss.
+    - They difficult to deal with because Identifying these risks is labor-intensive as testing becomes difficult with increased agent complexity.
+  ]
   87. What is LLM alignment, and why is it important?
-
+  #answer-box[
+    - *LLM alignment* is a learning phase where they learn how to present information to users and align to human preferences.
+    - It is important because it helps prevent harmful or unintended consequences, ensuring that LLMs act in ways that are beneficial and safe for users.
+  ]
   88. How does Proximal Policy Optimization (PPO) work, and what are its two benefits?
-
+  #answer-box[
+    - *Proximal Policy Optimization (PPO)* is a reinforcement learning algorithm that optimizes the policy of an agent by balancing exploration and exploitation.
+    - *Benefits*:
+      + Prevents mode collapse to single high reward answers.
+      + Prevents the model from deviating too far from the distribution where the reward model is accurate.
+  ]
   89. What are three drawbacks of PPO?
-
+  #answer-box[
+    + Need to train multiple models.
+    + Needs sampling from Language model during fine-tuning.
+    + Complicated reinforcement learning training process.
+  ]
   90. How does Direction Preference Optimization (DPO) improve upon PPO?
-
+  #answer-box[
+    *Direction Preference Optimization (DPO)* improves upon PPO by directly optimizing the policy based on preference data, rather than relying on a reward model.
+  ]
   91. What is Reinforcement Learning from Human Feedback (RLHF)?
-
+  #answer-box[
+    *Reinforcement Learning from Human Feedback (RLHF)* is a method that combines reinforcement learning with human feedback to train language models, allowing them to align with human preferences and improve their performance in generating responses.
+  ]
   92. What are the challenges of the _human feedback_ in RLHF?
-
+  #answer-box[
+    - Biases of human evaluators.
+    - Good oversight is difficult.
+    - Data Quality: Cost/Quality trade-off.
+    - Tradeoff between richness and efficiency of feedback types
+  ]
   93. What are the challenges of the _reward model_ in RLHF?
-
+  #answer-box[
+    - A single reward model cannot represent a diverse society of humans.
+    - Reward misgeneralization: reward model may fit with human preference data due to unexpected features.
+    - Evaluation of reward model is difficult and expensive.
+  ]
   94. What are the challenges of the _policy_ in RLHF?
-
+  #answer-box[
+    - Robust reinforcement learning is difficult.
+    - Policy misgeneralization: training and deployment environments are different.
+  ]
   95. Name and explain the three key concepts for language agents.
-
+  #answer-box[
+    + *Reasoning*: The ability to update short-term memory.
+    + *Memory*: The capacity to store and retrieve information.
+    + *Planning*: The algorithm to choose an action from the action space.
+  ]
   96. Why are reasoning and acting helpful for agents?
-
+  #answer-box[
+    - *Reasoning* helps agents to make informed decisions based on the current context and available information.
+    - *Acting* allows agents to take actions that can change the environment or achieve specific goals, enabling them to interact effectively with users and systems.
+  ]
   97. How do LLM agents have short-term and long-term memories, and what are they most useful for?
-
+  #answer-box[
+    - *Short-term memory*: This is primarily the context window of the LLM.
+      - Most useful for reasoning.
+    - *Long-term memory*: retains knowledge and experiences over time, enabling the agent to learn from past interactions and improve future performance.
+      - Most usefull for retrieving and learning.
+  ]
   98. Name and explain three planning paradigms for language agents. Give an advantage and a drawback for each.
-
+  #answer-box[
+    + *Reactive*: Combines reasoning and acting in a single framework.
+      - *Advantage*: fast, easy to implement.
+      - *Drawback*: greedy, short-sighted.
+    + *Tree Search with Real Interactions*: Breaks down complex tasks into smaller, manageable steps.
+      - *Advantage*: systematic exploration.
+      - *Drawback*:  irreversible actions, unsafe, slow.
+    + *Model-Based Planning*: Organizes actions into a hierarchy of goals and sub-goals.
+      - *Advantage*: faster, safer, systematic exploration.
+      - *Drawback*: relies on the accuracy and generalizability of the world model.
+  ]
   99. What are the advantages of code agents?
-
+  #answer-box[
+    - *Object Management*: They can handle complex data structures (images, audio, texts).
+    - *Composability*: They allow for the combination and reuse of actions.
+    - *Generality*: Code agents are capable of performing any computationally possible task.
+  ]
   100. What is the purpose of the Model Context Protocol (MCP)?
+  #answer-box[
+    The purpose of the Model Context Protocol (MCP) is to dramatically reduce integration complexity and maintenance burden when building AI applications that interact with various tools and data sources. It achieves this by:
+    - Defining a standard protocol where each AI application implements the client side of MCP only once.
+    - Requiring each tool or data source to implement the server side of MCP only once.
+  ]
 ]
