@@ -26,13 +26,13 @@
   ])
 }
 
-#let answer-box(width: 1fr, height: auto, body) = {
+#let answer-box(width: 1fr, height: auto, color: blue, body) = {
   box(
     width: width,
     height: height,
     inset: 5pt,
-    fill: blue.lighten(95%),
-    stroke: (paint: blue, thickness: 1pt, dash: "dashed"),
+    fill: color.lighten(95%),
+    stroke: (paint: color, thickness: 1pt, dash: "dashed"),
     radius: 3pt,
     [
       #body
@@ -66,7 +66,9 @@
   ]
 
   2. Name and provide examples of five types of dialog system applications.
-  #answer-box[
+  #answer-box(color: red)[
+    #align(center)[#text(red)[[ Needs to be verified ]]]
+
     + *Task-oriented*:
       - Example: Booking a flight, ordering food, scheduling appointments.
     + *Open-domain conversation*:
@@ -117,9 +119,8 @@
     Circle the maxim and describe the implicature below:
 
     #align(center)[Quantity, Quality, Relation, Manner]
-
   ]
-  #answer-box[
+  \  #answer-box[
     - *Broken maxims*: Quantity, Relation
     - *Implicature*: Person B states too much information and does not answer the question directly, suggesting they did not study enough for the exam.
   ]
@@ -139,10 +140,10 @@
   ]
   9. What is adaptation/entrainment in dialog, and in what forms does it take place?
   #answer-box[
-    *Adaptation/Entrainment* refers to the phenomenon where speakers adjust their language, style, or behavior to align with their conversational partner. It can take place in various forms, including:
-    - *Lexical entrainment*: using similar words or phrases.
-    - *Syntactic entrainment*: adopting similar sentence structures.
-    - *Prosodic entrainment*: matching speech rate, tone, and rhythm.
+    - *Adaptation/Entrainment* refers to the phenomenon where speakers adjust their language, style, or behavior to align with their conversational partner. It can take place in various forms, including:
+      - *Lexical entrainment*: using similar words or phrases.
+      - *Syntactic entrainment*: adopting similar sentence structures.
+      - *Prosodic entrainment*: matching speech rate, tone, and rhythm.
   ]
   10. You have developed a function to measure lexical entrainment over the turns in a conversation. You apply this to a dataset of human–machine conversations with your system and find that over time, the entrainment increases. What does this tell you about your system?
 
@@ -192,15 +193,15 @@
     ],
   )
   #answer-box[
-    *Benefit*: It allows NLU systems to consider multiple interpretations of the input, improving robustness against ASR errors.
+    - *Benefit*: It allows NLU systems to consider multiple interpretations of the input, improving robustness against ASR errors.
   ]
   17. Explain how NLU can be formulated as a sequence-to-sequence learning task.
   #answer-box[
-    NLU can be formulated as a sequence-to-sequence learning task by treating the input utterance as a sequence of tokens and the output as a sequence of semantic representations, such as dialog acts or slot-value pairs.
+    - NLU can be formulated as a sequence-to-sequence learning task by treating the input utterance as a sequence of tokens and the output as a sequence of semantic representations, such as dialog acts or slot-value pairs.
   ]
   18. What is MLM (Masked Language Modeling)?
   #answer-box[
-    *Masked Language Modeling* is a self-supervised learning technique where certain tokens in a sentence are masked, and the model learns to predict them based on the surrounding context.
+    - *Masked Language Modeling* is a self-supervised learning technique where certain tokens in a sentence are masked, and the model learns to predict them based on the surrounding context.
   ]
   19. Name two challenges for modular dialog system architecture and explain the hybrid approach as its solution.
   #answer-box[
@@ -218,7 +219,7 @@
   ]
   21. What are some challenges associated with dialog state tracking? Name at least four.
   #answer-box[
-    *Challenges*:
+    - *Challenges*:
       - Process long context.
       - Remember past information.
       - Infer/Extract implicit information.
@@ -242,7 +243,7 @@
   ]
   24. What is the interpretation of perplexity as an NLG metric?
   #answer-box[
-    *Perplexity* is a measure of how well a language model predicts a sample. The lower the perplexity, the less confused the model is in making its predictions
+    - *Perplexity* is a measure of how well a language model predicts a sample. The lower the perplexity, the less confused the model is in making its predictions
   ]
   25. What is the main difference between BERTScore and other metrics, such as ROUGE and METEOR, in NLG evaluation?
   #answer-box[
@@ -277,7 +278,7 @@
   ]
   29. How does a data-driven automatic dialog measure work, and what are its problems?
   #answer-box[
-    - *Data-driven automatic dialog measure* can be trained from a human-labeled dataset with scores. The model then predict the evaluation score for an unseen dialogue. 
+    - *Data-driven automatic dialog measure* can be trained from a human-labeled dataset with scores. The model then predict the evaluation score for an unseen dialogue.
     - *Problems*: domain-dependence, lack of interpretability, single output, susceptibility to adversarial attacks
   ]
   30. What are the benefits and drawbacks of using prompting for dialog evaluation?
@@ -298,7 +299,7 @@
   ]
   32. What is the antibiotic effect in the context of dialog evaluation metrics?
   #answer-box[
-    The *antibiotic effect* is the phenomenon where optimization on one fixed automatic metric can lead to models that exploit weaknesses in the metric rather than truly improving performance.
+    - The *antibiotic effect* is the phenomenon where optimization on one fixed automatic metric can lead to models that exploit weaknesses in the metric rather than truly improving performance.
   ]
   33. Name and explain the factors that make an NLG system good.
   #answer-box[
@@ -323,18 +324,18 @@
   ]
   36. How does class-based language modeling work for NLG?
   #answer-box[
-    *Classes*:
-    #[
-      - _inform_area_
-      - _inform_address_
-      - _inform_phone_
-      - _request_area_
-      - ...
-    ]
+    - *Classes*:
+      #[
+        - _inform_area_
+        - _inform_address_
+        - _inform_phone_
+        - _request_area_
+        - ...
+      ]
 
-    *Generation process*:
-    + Generate utterances by sampling words from a particular class language model in which the dialogue act belongs to.
-    + Re-rank utterances according to scores.
+    - *Generation process*:
+      + Generate utterances by sampling words from a particular class language model in which the dialogue act belongs to.
+      + Re-rank utterances according to scores.
   ]
 
   37. How does an RNN network improve NLG over its predecessors? In other words, what are its main features?
@@ -346,7 +347,9 @@
       - *Flexibility to Condition on Auxiliary Inputs*
   ]
   38. How does LSTM prevent the vanishing gradient problem?
-  #answer-box[
+  #answer-box(color: red)[
+    #align(center)[#text(red)[[ Needs some rework ]]]
+
     - Consider memory cell, where recurrence actually happens:
       $
         C_t = i_t ⊙ Ĉ_t + f_t ⊙ C_(t - 1)
@@ -471,54 +474,230 @@
   ]
 
   51. What is Retrieval-Augmented Generation (RAG), and how does it work? Name and explain its two main components.
+  #answer-box[
+    - Retrieval-Augmented Generation (RAG) is a framework that enhances generation models with real-time document retrieval.
 
+    - Main components:
+      + *Retriever*: Finds relevant documents based on input query
+      + *Generator*: Produces the final response using retrieved docs
+  ]
   52. What is the key advantage of separating the retriever from the generator in RAG systems?
+  #answer-box[
+    - Up-to-date knowledge without retraining
+  ]
 
   53. Name two advantages of RAG systems over traditional end-to-end language models.
+  #answer-box[
+    + Fewer hallucinations with citation-worthy sources
+    + Modular: swap retriever/generator independently
+  ]
 
   54. What are the four pipeline stages in a RAG system?
+  #answer-box[
+    + Encode user input to query embedding
+    + Retrieve top-k documents (using DPR, BM25, etc.)
+    + Concatenate each document with query
+    + Generate response using encoder-decoder model (BART, T5)
+  ]
 
   55. What are three limitations of RAG systems?
+  #answer-box[
+    + Slow response due to retrieval latency
+    + Noisy or irrelevant documents degrade output
+    + Generator might ignore retrieved text
+  ]
 
   56. How can retriever quality be improved in RAG systems?
+  #answer-box[
+    - Use dense retrievers (e.g., DPR, ColBERT) over sparse (e.g. BM25)
+    - Fine-tune retriever on dialog queries
+    - Rerank candidates with cross-encoder models
+  ]
 
   57. What are two techniques to improve alignment between the generator and retrieved knowledge?
+  #answer-box[
+    + Train with gold-grounded responses
+    + Use contrastive learning between relevant and irrelevant docs
+    + Penalize hallucinations with RLHF or fact-checking signals
+  ]
 
   58. What are the three key evaluation metrics for grounded dialog?
+  #answer-box[
+    + *Faithfulness*: Is it factually accurate?
+    + *Relevance*: Is it context-appropriate?
+    + *Attribution*: Does it cite or reflect the retrieved source?
+  ]
 
   59. What is the potential risk of RAG systems in open-domain dialog?
+  #answer-box[
+    - *Leakage of private data*, if the external datastore used by the RAG system contains sensitive or private information, there is a risk that this data could be retrieved and inadvertently exposed in the system's responses.
+    - Could still produce *hallucinations or misleading information* if the retrieved data itself is incorrect, biased, or misinterpreted by the language model.
+  ]
 
   60. Name and explain three reasons why open-domain dialog is more challenging than task-oriented dialog.
+  #answer-box[
+    + *Unlimited topics*: Users can ask about anything
+    + *Ambiguity*: Same phrase can have many meanings
+    + *Context management*: Conversations span multiple turns
+    + *Lack of grounding*: Risk of hallucinating information
+  ]
 
-  61. Why are generic responses like ‘I don’t know’ problematic in chatbot conversations, and how can they be mitigated?
+  61. Why are generic responses like "I don't know" problematic in chatbot conversations, and how can they be mitigated?
+  #answer-box[
+    - *Problem*: Safe defaults like "I don't know" or "That's interesting."
+      - Reduce user engagement
+      - Perceived as evasive or boring
+
+    - *Mitigation*:
+      - Penalize frequent responses in decoding (frequency penalties)
+      - Use top-k/top-p sampling to promote lexical diversity
+      - Train with contrastive or adversarial losses for engaging answers
+  ]
 
   62. What are three ways to mitigate hallucination in dialog systems?
+  #answer-box[
+    + Incorporate retrieval-based grounding (RAG)
+    + Post-generation fact checking modules
+    + Human feedback training to penalize factual errors
+  ]
 
   63. What is a major risk when a chatbot loses context in multi-turn conversations, and what are two ways to mitigate it?
+  #answer-box[
+    - *Problem*: Bots lose track of user preferences or dialog history
+      - Responses feel disconnected
+      - Violates consistency, especially for multi-turn dialog
+
+    - *Mitigation*:
+      - Use long-context transformers (e.g. Longformer, GPT with memory)
+      - Add dialog memory modules
+      - U se dialog history explicitly as input
+  ]
 
   64. What types of errors fall under pragmatic errors in chatbot responses, and what are three ways to mitigate such errors?
+  #answer-box[
+    - *Problem*: Bot says things that are socially or contextually inappropriate
+      - Fails to detect sarcasm, humor, formality
+      - Lacks understanding of politeness or indirectness
+
+    - *Mitigation*:
+      - Train on datasets annotated for tone, register
+      - Use style-conditioned generation
+      - Explicit modeling of Grice’s Maxims
+  ]
 
   65. How can chatbots mitigate toxic or biased responses?
+  #answer-box[
+    - Filter training data using toxicity classifiers
+    - Post-process outputs with safety layers
+    - Reinforcement learning from human feedback (RLHF)
+  ]
 
   66. Why is it difficult for chatbots to handle multi-intent utterances like ‘Book a flight to Tokyo and what’s the weather there?’
+  #answer-box[
+    - *Problem*: Users combine multiple intents in one utterance
+    - *Example*: “Book me a flight to Tokyo and what’s the weather there?”
+      - Requires multi-task understanding
+      - Potentially separate dialog states
+
+    - *Mitigation*:
+      - Semantic parsing into sub-tasks
+      - Intent detection + follow-up prompts
+  ]
 
   67. What distinguishes a retrieval-based language model from a standard language model?
+  #answer-box[
+    - It retrieves from an external datastore (at least during inference time)
+  ]
 
   68. Give five reasons why we need retrieval-based language models.
+  #answer-box[
+    + LLMs can’t memorize all (long-tail) knowledge in their parameters
+    + LLMs’ knowledge is easily outdated and hard to update
+    + LLMs’ output is challenging to interpret and verify
+    + LLMs are shown to easily leak private training data
+    + LLMs are *large* and expensive to train and run
+  ]
 
   69. What are the three main design questions for retrieval-based language models?
+  #answer-box[
+
+    #grid(
+      columns: 3,
+      inset: .75em,
+      align: horizon,
+
+      [*1. What to retrieve?*], [*2. How to use retrieval?*], [*3. When to retrieve?*],
+      [
+        - Chunks
+        - Tokens
+        - Others
+      ],
+      [
+        - Input layer
+        - Intermediate layers
+        - Output layer
+      ],
+      [
+        - Once
+        - Every n tokens (n>1)
+        - Every token
+      ],
+    )
+
+  ]
 
   70. What is the main idea behind kNN-LM?
+  #answer-box[
+    - A different way of using retrieval, where the LM outputs a nonparametric distribution over every token in the data.
+    - Can be seen as an incorporation in the “output” layer
+  ]
 
   71. Give an advantage and a disadvantage of fine-tuning in adapting an LM to downstream tasks.
+  #answer-box[
+    - *Advantages*:
+      - Customizable
+      - Competitive w/ more data
+    - *Disadvantages*:
+      - Requiring training
+  ]
 
   72. Give an advantage and a disadvantage of reinforcement learning in adapting an LM to downstream tasks.
+  #answer-box[
+    - *Advantages*:
+      - Better alignment with user preferences
+    - *Disadvantages*:
+      - Requiring additional data collection (preference)
+  ]
 
   73. Give an advantage and a disadvantage of retrieval-based prompting.
+  #answer-box[
+    - *Advantages*:
+      - No training & strong performance
+    - *Disadvantages*:
+      - Hard to control, underperforming full FT model
+  ]
 
   74. Name and explain three methods for adapting a retrieval-based LM for downstream tasks.
+  #answer-box[
+    + *Fine-tuning*:
+      - Involves *training the LM and/or the retriever on task-specific data and a datastore*. Fine-tuning can be done on both the retriever and the LM, or just the query-side of the retriever while fixing the index.
+    + *Reinforcement learning*:
+      - Uses *human feedback to optimize the language model's policy*. Instead of relying solely on supervised fine-tuning, RL allows the model to learn to present information and align with human preferences for aspects like helpfulness, honesty, and harmlessness.
+    + *Prompting*:
+      - Involves *providing retrieved knowledge as part of the input context to a frozen (pre-trained) LM*. It does not require additional training of the LM on downstream tasks.
+  ]
 
   75. Name and explain four key effectiveness points in downstream tasks for retrieval-based LMs.
+  #answer-box[
+    + *Long-tail*:
+      - LLMs often struggle in *long-tail/less frequent entities*. Scaling LLMs only helps for *popular knowledge*; for long tail, scaling gives marginal performance improvements Retrieval gives large performance gain in such *long-tail*. Largely reduce hallucinations in *long-form generations*.
+    + *Knowledge update*:
+      - Standard LLMs need to be *trained again* to adapt to evolving world knowledge. Swapping the knowledge corpus to *accommodate temporal changes* without additional training.
+    + *Verifiability*:
+      - *Much smaller LMs with retrieval* can outperform much larger LMs in fact completions.
+    + *Parameter-efficiency*:
+      - Human and model can reliably assess the *factuality of the generations* using the retrieved evidence.
+  ]
 
   76. Name and explain five scenarios when retrieval-based LMs should be used.
 
