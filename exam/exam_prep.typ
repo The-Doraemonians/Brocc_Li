@@ -146,7 +146,13 @@
       - *Prosodic entrainment*: matching speech rate, tone, and rhythm.
   ]
   10. You have developed a function to measure lexical entrainment over the turns in a conversation. You apply this to a dataset of human–machine conversations with your system and find that over time, the entrainment increases. What does this tell you about your system?
-
+  #answer-box[
+  An increase in lexical entrainment over time in human-machine conversations suggests that your system is successfully adapting its word choices to align with those of the human user.
+  This indicates that the system is becoming:
+  - *More efficient and natural* in the dialogue flow.
+  - Likely *enhancing mutual understanding* between the user and the system.
+  - Potentially leading to *improved user experience* and preference, as entrainment is a sign of successful interaction and can make the system's responses feel more human-like and cooperative.
+  ]
   11. What is the difference between a chatbot and a dialog system?
   #answer-box[
     - A *chatbot* is a system that only response to the inputs relied on static knowledge.
