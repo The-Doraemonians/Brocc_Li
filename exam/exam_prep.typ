@@ -59,9 +59,9 @@
     + Write the initials (e.g., DM for Dialog Manager) of the dialog component next to the statement that best matches it:
 
       - Keeps track of the users goals: #writing-area()[DST]
-      - Historically involved sentence planning and surface realization: #writing-area()[POL]
+      - Historically involved sentence planning and surface realization: #writing-area()[NLG]
       - Proposes an assignment of values to slots from an ontology: #writing-area()[NLU]
-      - Typically learned through reinforcement learning and decides what action to take next: #writing-area()[NLG]
+      - Typically learned through reinforcement learning and decides what action to take next: #writing-area()[POL]
 
   ]
 
