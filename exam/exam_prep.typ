@@ -147,11 +147,11 @@
   ]
   10. You have developed a function to measure lexical entrainment over the turns in a conversation. You apply this to a dataset of human–machine conversations with your system and find that over time, the entrainment increases. What does this tell you about your system?
   #answer-box[
-  An increase in lexical entrainment over time in human-machine conversations suggests that your system is successfully adapting its word choices to align with those of the human user.
-  This indicates that the system is becoming:
-  - *More efficient and natural* in the dialogue flow.
-  - Likely *enhancing mutual understanding* between the user and the system.
-  - Potentially leading to *improved user experience* and preference, as entrainment is a sign of successful interaction and can make the system's responses feel more human-like and cooperative.
+    An increase in lexical entrainment over time in human-machine conversations suggests that your system is successfully adapting its word choices to align with those of the human user.
+    This indicates that the system is becoming:
+    - *More efficient and natural* in the dialogue flow.
+    - Likely *enhancing mutual understanding* between the user and the system.
+    - Potentially leading to *improved user experience* and preference, as entrainment is a sign of successful interaction and can make the system's responses feel more human-like and cooperative.
   ]
   11. What is the difference between a chatbot and a dialog system?
   #answer-box[
@@ -737,8 +737,10 @@
   ]
   78. Name and explain the two competing views on agents.
   #answer-box[
-    + *LLM-first view*: We make an LLM into an agents.
-    + *Agent-first view*: We integrate LLMs into AI agents so they can use language for reasoning and communication.
+    + *LLM-first view*: We make an LLM into an agents!
+      - Implications: scaffold on top of LLMs, prompting-focused, heavy on engineering
+    + *Agent-first view*: We integrate LLMs into AI agents so they can use language for reasoning and communication!
+      - Implications: All the same challenges faced by previous AI agents (e.g., perception, reasoning, world models, planning) still remain, but we need to *re-examine them through the new lens of LLMs* and tackle new ones (e.g., synthetic data, self-reﬂection, internalized search)
   ]
   79. What is the fundamental difference between current and classic agents?
   #answer-box[
@@ -759,9 +761,18 @@
   ]
   81. Name and explain three methods that can be used to teach LLMs how to properly use tools.
   #answer-box[
-    + *Prompting*: Instruct the LLM to use a specific tool by defining in prompt.
-    + *Reinforcement Learning*: Autonomous exploration and correction of errors based on environmental feedback through reinforcement learning. Agent learns to select appropriate tools by maximizing rewards.
-    + *Self-supervised*: Pre-defined tool APIs and encourage models to call and execute tool APIs.
+    + *Tutorial Learning*:
+      - Have model tuned for tool use read tool manuals (tutorials), so that it understands the functions of the tool and how to invoke them
+      - Works well with powerful LLMs
+    + *Reinforcement Learning*:
+      - Autonomous exploration and correction of errors based on environmental feedback through reinforcement learning
+      - Action space defined by tools
+      - Agent learns to select appropriate tool
+      - Correct action maximize reward signal
+    + *Self-supervised Tool Learning*:
+      - Pre-defined tool APIs
+      - Encourage models to call and execute tool APIs
+      - Design self-supervised loss to evaluate tool execution helpfulness
   ]
   82. What is the ReAct agent, and what are its benefits?
   #answer-box[
@@ -788,13 +799,19 @@
   ]
   85. Give two examples of a multi-agent system and explain how they work.
   #answer-box[
-    + *Retrieval-Augmented QA*: includes 2 agents, a retriever and a generator, that work together to answer questions by retrieving relevant information and generating responses.
-    + *Decision Making*: 2 agents, one suggests next step, executor does action and provides feedback.
+    + *Multi-Agent Coding*:
+      - Commander receives user questions and executes code
+      - Writer writes code
+      - Safeguard ensures no information leakage or malicious code
+    + *Decision Making*:
+      - Two agents: One suggests next step, Executor does action and provides feedback
+      - Three agents: additional agent that provides commonsense facts about the domain when needed
   ]
   86. What are two potential risks of multi-agent systems, and why are they difficult to deal with?
   #answer-box[
     + Leaking private data
     + Causing financial loss.
+
     - They difficult to deal with because Identifying these risks is labor-intensive as testing becomes difficult with increased agent complexity.
   ]
   87. What is LLM alignment, and why is it important?
@@ -811,7 +828,9 @@
   ]
   89. What are three drawbacks of PPO?
   #answer-box[
-    + Need to train multiple models.
+    + Need to train multiple models
+      - Reward model
+      - Policy model
     + Needs sampling from Language model during fine-tuning.
     + Complicated reinforcement learning training process.
   ]
@@ -825,10 +844,15 @@
   ]
   92. What are the challenges of the _human feedback_ in RLHF?
   #answer-box[
-    - Biases of human evaluators.
-    - Good oversight is difficult.
-    - Data Quality: Cost/Quality trade-off.
-    - Tradeoff between richness and efficiency of feedback types
+    - *Biases of human evaluators*:
+      - Studies found that ChatGPT became politically biased after RLHF
+    - *Good oversight is difficult*:
+      - Evaluators are paid per example and may make mistakes given time constraints
+      - Poor feedback when evaluating difficult tasks
+    - *Data Quality*:
+      - Cost/Quality tradeoff
+    - *Tradeoff between richness and efficiency of feedback types*:
+      - Comparison-based feedback, scalar feedback, correction feedback, language feedback, …
   ]
   93. What are the challenges of the _reward model_ in RLHF?
   #answer-box[
@@ -838,8 +862,10 @@
   ]
   94. What are the challenges of the _policy_ in RLHF?
   #answer-box[
-    - Robust reinforcement learning is difficult.
-    - Policy misgeneralization: training and deployment environments are different.
+    - Robust reinforcement learning is difficult
+      - Balance between exploring new actions and exploiting known rewards
+      - Challenge increases in high-dimensional or sparse reward settings
+    - Policy misgeneralization: training and deployment environments are different
   ]
   95. Name and explain the three key concepts for language agents.
   #answer-box[
