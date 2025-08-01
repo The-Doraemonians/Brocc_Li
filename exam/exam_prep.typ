@@ -166,6 +166,13 @@
       - encodes the system or the user intention in a (part of) dialogue turn
     + *semantic slots and values*:
       - further describe entities from the ontology that a dialogue turn refers to
+
+    #figure(
+      image("images/intent_semantic_example.png", width: 80%),
+      caption: [
+        Examples for the two semantic concepts.
+      ],
+    )
   ]
   14. Name and explain three challenges in NLU.
   #answer-box[
@@ -180,10 +187,19 @@
   ]
   15. Name and explain two methods for using ASR hypotheses for the NLU inputs. Explain why one is more robust than the other. Explain the ways for NLU prediction using ASR hypotheses.
   #answer-box[
-    - *top ASR hypothesis*: Features are extracted directly from single best hypothesis and the classification is performed into relevant semantic classes.
-    - *N-best list of ASR hypothesis*: This method uses multiple ASR hypotheses to provide a more comprehensive input for NLU.
+    + *Top ASR hypothesis*: Features are extracted directly from single best hypothesis and the classification is performed into relevant semantic classes.
+    + *N-best list of ASR hypothesis*: Uses multiple ASR hypotheses to provide a more comprehensive input for NLU.
+
     - N-best list of ASR hypothesis is *more robust* because it incorporates uncertainty in ASR output, reducing the chance of NLU errors.
-    - *NLU prediction using ASR hypotheses*: the goal is to obtain p(d|a), which is the probability of a dialogue act d given the audio signal a.
+
+    - *NLU prediction using ASR hypotheses*: the goal is to obtain $p(d|a)$, which is the probability of a dialogue act $d$ given the audio signal $a$. It is achieved by the following ways:
+      + Sum it up
+        $
+          p(d|a) = sum_(i=1)^N p(d|t_i)p(t_i|a)
+        $
+        where $t_i$ is the N-best list
+      + Train ASR and NLU jointly
+      + Use separate encoders and combine the embeddings for final prediction
   ]
   16. Give an example of a word confusion network for ASR and explain its benefit.
   #figure(
@@ -408,7 +424,9 @@
   ]
 
   44. How is dialog management framed in a Markov Decision Process (MDP)?
-  #answer-box[
+  #answer-box(color: red)[
+    #align(center)[#text(red)[[ Needs some rework ]]]
+
     + *Data*:
       - Dialogue states
       - Reward: a measure of dialogue quality
@@ -433,7 +451,7 @@
 
   46. Why is exact belief tracking intractable in partially observable MDP-based dialog systems?
   #answer-box[
-    - Requires summation over all possible states at every dialogue turn - *intractable*!
+    Requires summation over all possible states at every dialogue turn - *intractable*!
   ]
 
   47. Name and explain three requirements for belief tracking.
@@ -570,7 +588,7 @@
     - *Mitigation*:
       - Use long-context transformers (e.g. Longformer, GPT with memory)
       - Add dialog memory modules
-      - U se dialog history explicitly as input
+      - Use dialog history explicitly as input
   ]
 
   64. What types of errors fall under pragmatic errors in chatbot responses, and what are three ways to mitigate such errors?
@@ -849,9 +867,10 @@
   ]
   99. What are the advantages of code agents?
   #answer-box[
-    - *Object Management*: They can handle complex data structures (images, audio, texts).
-    - *Composability*: They allow for the combination and reuse of actions.
-    - *Generality*: Code agents are capable of performing any computationally possible task.
+    + Can perform complex tasks that require programming skills.
+    + Can automate repetitive tasks, saving time and effort.
+    + Can handle large datasets and perform data analysis efficiently.
+    + Can integrate with various APIs and services to extend functionality.
   ]
   100. What is the purpose of the Model Context Protocol (MCP)?
   #answer-box[
