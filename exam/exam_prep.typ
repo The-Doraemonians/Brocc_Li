@@ -70,20 +70,19 @@
   ]
 
   2. Name and provide examples of five types of dialog system applications.
-  #answer-box(color: red)[
-    #align(center)[#text(red)[[ Needs to be verified ]]]
-
-    + *Task-oriented*:
-      - Example: Booking a flight, ordering food, scheduling appointments.
-    + *Open-domain conversation*:
-      - Example: Casual conversation, customer support, mental health chatbots.
-    + *Information-seeking*:
-      - Example: Answering questions about weather, news, or general knowledge.
-    + *Personal assistant*:
-      - Example: Setting reminders, managing calendars, controlling smart home devices.
-    + *Educational*:
-      - Example: Tutoring systems, language learning assistants, interactive quizzes.
+  #answer-box[
+    + *Phone-Based Systems*:
+      - Example: Banking hotlines (e.g., balance inquiries), public transport info services (e.g., "Let's Go" bus schedule system).
+    + *Assistant Apps*:
+      - Example: Language learning apps (e.g., Duolingo), navigation tools (e.g., "Spacebook").
+    + *Smart Speakers*:
+      - Example: Amazon Alexa or Google Home controlling lights, playing music, or answering questions.
+    + *Voice-Operated Appliances*:
+      - Example: Voice-controlled TVs (e.g., Samsung QLED TVs with Bixby) or smart refrigerators.
+    + *Car Systems*:
+      - Example: Android Auto or Apple CarPlay for navigation, music control, and phone calls.
   ]
+
   3. What is turn‑taking in dialog and why is it difficult for a dialog system to handle it? Name and explain at least two reasons.
   #answer-box[
     - *Turn-taking* is the process of alternating speaking turns between speakers in a conversation.
