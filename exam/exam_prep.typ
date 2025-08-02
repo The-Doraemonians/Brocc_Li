@@ -158,8 +158,13 @@
   ]
   11. What is the difference between a chatbot and a dialog system?
   #answer-box[
-    - A *chatbot* is a system that only response to the inputs relied on static knowledge.
-    - A *dialog system* is an interface to an external knowledge source with the main goal is to retrieve information from the knowledge source.
+    - *Dialog System*: A broader term for any computational system designed to converse with humans using natural language.
+      - Includes task-oriented & open-domain systems.
+      - May involve multimodal interaction (voice, text, gestures).
+    - *Chatbot*: A subset of dialog systems focused primarily on open-domain, social conversation without a specific task.
+      - Emphasizes chit-chat, humor, or companionship.
+      - Rarely accesses databases/APIs; relies on generative language models.
+      - Often deployed in messaging apps or social platforms.
   ]
   12. What is an ontology, and how are the ontology slots distinguished from one another?
   #answer-box[
