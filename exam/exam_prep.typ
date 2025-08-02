@@ -130,10 +130,10 @@
 
   7. Describe *grounding* in dialog systems and name at least two grounding signals, each briefly explained in a sentence.
   #answer-box[
-    + *Grounding* ensures mutual understanding.
-    + *Grounding signals*:
-      - *Implicit*: confirm without state it
-      - *Explicit*: confirm message
+    *Grounding* refers to *establishing mutual understanding* in conversation.
+    - *Grounding signals*:
+      - *Positive Signals* (e.g., "okay"): These indicate that the listener has understood and accepted the information.
+      - *Negative Signals* (e.g., confusion): These signals indicate a lack of understanding or a need for clarification from the listener.
   ]
   8. What are anaphora and cataphora, and why are they problematic for dialog systems?
   #answer-box[
