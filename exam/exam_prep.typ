@@ -377,22 +377,8 @@
       - *Flexibility to Condition on Auxiliary Inputs*
   ]
   38. How does #abbr.a[LSTM] prevent the vanishing gradient problem?
-  #answer-box(color: red)[
-    #align(center)[#text(red)[[ Needs some rework ]]]
-
-    - Consider memory cell, where recurrence actually happens:
-      $
-        C_t = i_t ⊙ Ĉ_t + f_t ⊙ C_(t - 1)
-      $
-    - We can back-propagate the gradient by chain rule:
-      $
-        (∂ E_t) / (∂ C_(t - 1))
-        =
-        (∂ E_t) / (∂ C_t)
-        (∂ C_t) / (∂ C_(t - 1))
-        =
-        ((∂ E_t) / (∂ C_t)) f_t
-      $
+  #answer-box[
+    #abbr.a[LSTM] prevents the vanishing gradient problem by using cell state as a gating mechanism which works as a memory cell, allowing it to retain information overtime without losing gradients during backpropagation.
   ]
 
   39. Why can a semantically conditioned #abbr.a[LSTM] be better than a non-conditional #abbr.a[LSTM]?
